@@ -14,7 +14,7 @@ public class FrameContoller : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
-        {
+        {/*
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -24,6 +24,8 @@ public class FrameContoller : MonoBehaviour
                     GetComponent<FileBrowser>().OpenBrowser();
                 }
             }
-        }       
+            */
+        }
     }
+
 }

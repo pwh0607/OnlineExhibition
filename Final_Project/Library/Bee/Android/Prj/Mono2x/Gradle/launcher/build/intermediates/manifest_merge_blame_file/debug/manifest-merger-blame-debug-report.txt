@@ -1,0 +1,160 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.DefaultCompany.Final_Project"
+4    android:installLocation="preferExternal"
+5    android:versionCode="1"
+6    android:versionName="0.1" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="22"
+9-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml
+10        android:targetSdkVersion="30" />
+10-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml
+11
+12    <supports-screens
+12-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:3-163
+13        android:anyDensity="true"
+13-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:135-160
+14        android:largeScreens="true"
+14-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:78-105
+15        android:normalScreens="true"
+15-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:49-77
+16        android:smallScreens="true"
+16-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:21-48
+17        android:xlargeScreens="true" />
+17-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:3:106-134
+18
+19    <uses-feature android:glEsVersion="0x00030000" />
+19-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-54
+19-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:19-51
+20    <uses-feature
+20-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:13:5-15:36
+21        android:name="android.hardware.vulkan.version"
+21-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:14:9-55
+22        android:required="false" />
+22-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:15:9-33
+23
+24    <uses-permission android:name="android.permission.INTERNET" />
+24-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:5-67
+24-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:17:22-64
+25
+26    <uses-feature
+26-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:5-21:36
+27        android:name="android.hardware.touchscreen"
+27-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:20:9-52
+28        android:required="false" />
+28-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:21:9-33
+29    <uses-feature
+29-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:5-24:36
+30        android:name="android.hardware.touchscreen.multitouch"
+30-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:23:9-63
+31        android:required="false" />
+31-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:24:9-33
+32    <uses-feature
+32-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:25:5-27:36
+33        android:name="android.hardware.touchscreen.multitouch.distinct"
+33-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:26:9-72
+34        android:required="false" />
+34-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:27:9-33
+35
+36    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+36-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:4:2-98
+36-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:4:19-74
+37    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+37-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:5:2-99
+37-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:5:19-75
+38    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+38-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:6:2-94
+38-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:6:19-70
+39    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+39-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:7:2-93
+39-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:7:19-69
+40    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+40-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:8:2-93
+40-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:8:19-69
+41
+42    <application
+42-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:4:3-83
+43        android:debuggable="true"
+44        android:extractNativeLibs="true"
+44-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:29:18-50
+45        android:icon="@mipmap/app_icon"
+45-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:4:49-80
+46        android:label="@string/app_name"
+46-->C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\launcher\src\main\AndroidManifest.xml:4:16-48
+47        android:requestLegacyExternalStorage="true" >
+47-->[:NativeGallery:] C:\Users\user\.gradle\caches\transforms-2\files-2.1\09aa4134e1ee983fb1fa97a84fb1a375\NativeGallery\AndroidManifest.xml:9:15-58
+48        <activity
+48-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:30:9-50:20
+49            android:name="com.unity3d.player.UnityPlayerActivity"
+49-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:31:13-66
+50            android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
+50-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:32:13-194
+51            android:hardwareAccelerated="false"
+51-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:33:13-48
+52            android:launchMode="singleTask"
+52-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:34:13-44
+53            android:resizeableActivity="false"
+53-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:35:13-47
+54            android:screenOrientation="fullUser"
+54-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:36:13-49
+55            android:theme="@style/UnityThemeSelector" >
+55-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:37:13-54
+56            <intent-filter>
+56-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:38:13-42:29
+57                <action android:name="android.intent.action.MAIN" />
+57-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:39:17-69
+57-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:39:25-66
+58
+59                <category android:name="android.intent.category.LAUNCHER" />
+59-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:41:17-77
+59-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:41:27-74
+60            </intent-filter>
+61
+62            <meta-data
+62-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:44:13-46:40
+63                android:name="unityplayer.UnityActivity"
+63-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:45:17-57
+64                android:value="true" />
+64-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:46:17-37
+65            <meta-data
+65-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:47:13-49:40
+66                android:name="android.notch_support"
+66-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:48:17-53
+67                android:value="true" />
+67-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:49:17-37
+68        </activity>
+69
+70        <meta-data
+70-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:52:9-54:33
+71            android:name="unity.splash-mode"
+71-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:53:13-45
+72            android:value="0" />
+72-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:54:13-30
+73        <meta-data
+73-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:55:9-57:36
+74            android:name="unity.splash-enable"
+74-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:56:13-47
+75            android:value="True" />
+75-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:57:13-33
+76        <meta-data
+76-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:58:9-60:36
+77            android:name="unity.launch-fullscreen"
+77-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:59:13-51
+78            android:value="True" />
+78-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:60:13-33
+79        <meta-data
+79-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:61:9-63:37
+80            android:name="unity.allow-resizable-window"
+80-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:62:13-56
+81            android:value="False" />
+81-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:63:13-34
+82        <meta-data
+82-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:64:9-66:50
+83            android:name="notch.config"
+83-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:65:13-40
+84            android:value="portrait|landscape" />
+84-->[:unityLibrary] C:\workspace\unity\Final_Project\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\library_manifest\debug\AndroidManifest.xml:66:13-47
+85    </application>
+86
+87</manifest>
