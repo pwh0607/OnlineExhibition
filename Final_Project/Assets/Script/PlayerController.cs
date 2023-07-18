@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             m_UI.SetActive(false);
             return;
         }
+    
         PlayerMove();
         SetCamPos();
     }
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         m_velocity = m_velocity.normalized;
 
         m_animator.SetFloat("Move", m_velocity.magnitude);
-
+        Debug.Log(m_velocity.magnitude);
         transform.LookAt(transform.position + m_velocity);
 
         m_velocity.y -= gravity * Time.deltaTime;
