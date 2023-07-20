@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 7492995567627298362}
   - component: {fileID: 7492995567627298363}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_UI: {fileID: 3572350468459070345}
   cam: {fileID: 0}
   camPos: {fileID: 7492995567974589634}
-  complete: {fileID: 0}
+  complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
 --- !u!114 &7492995567627298360
 MonoBehaviour:
@@ -1526,6 +1526,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7488686417901344191}
     m_Modifications:
+    - target: {fileID: 6228476180151977107, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7492995567627298358}
+    - target: {fileID: 6228476180151977107, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LeaveRoom
+      objectReference: {fileID: 0}
     - target: {fileID: 6228476180481542457, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1616,6 +1624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+--- !u!1 &3572350467268769886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6228476181711221482, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+  m_PrefabInstance: {fileID: 7492995567897905844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3572350468459070345 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6228476180481542461, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
