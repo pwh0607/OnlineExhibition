@@ -76,17 +76,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         complete.SetActive(false);
     }
+
     public void LeaveRoom()
     {
         //방을 나오고 씬이동
         PhotonNetwork.LeaveRoom();
     }
-
     public override void OnLeftRoom()
     {
         Debug.Log("방 퇴장!");
         PhotonNetwork.LoadLevel("Lobby");
         PhotonNetwork.JoinLobby();
-        //base.O
     }
 }
