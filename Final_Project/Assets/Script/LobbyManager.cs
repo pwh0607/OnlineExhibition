@@ -101,8 +101,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Button instance = Instantiate(RoomBtnPrefab);
             instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
-            instance.transform.localPosition = new Vector2(280,480);
-            instance.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
+            RectTransform btnPos = instance.GetComponent<RectTransform>();
+            instance.transform.position = gameObject.transform.position;
+            btnPos.SetParent(gameObject.transform);
+            btnpos.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, (20 * nn), 36);
+            /*instance.transform.localPosition = new Vector2(280,480);
+            instance.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);*/
             instance.transform.SetParent(contentView.transform);
         }
         for (int i = 0; i < roomList.Count; i++)
