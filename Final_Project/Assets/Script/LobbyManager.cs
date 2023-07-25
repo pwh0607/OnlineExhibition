@@ -104,7 +104,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             RectTransform btnPos = instance.GetComponent<RectTransform>();
             instance.transform.position = gameObject.transform.position;
             btnPos.SetParent(gameObject.transform);
-            btnpos.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, (20 * nn), 36);
+            //btnpos.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left, (20 * n), 36);
             /*instance.transform.localPosition = new Vector2(280,480);
             instance.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);*/
             instance.transform.SetParent(contentView.transform);
