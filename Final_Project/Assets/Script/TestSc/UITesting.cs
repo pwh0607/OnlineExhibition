@@ -6,10 +6,12 @@ public class UITesting : MonoBehaviour
 {
     public Button btn;
     public GameObject btnPrefab;
+    public GameObject viewPort;
+
     // Start is called before the first frame update
     void Start()
     {
-               
+
     }
 
     // Update is called once per frame
@@ -21,5 +23,7 @@ public class UITesting : MonoBehaviour
     public void OnClickbtn()
     {
         GameObject instance = Instantiate(btnPrefab);
+        instance.transform.parent = viewPort.transform;
+        instance.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
     }
 }
