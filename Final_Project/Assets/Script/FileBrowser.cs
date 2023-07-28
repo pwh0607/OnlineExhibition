@@ -11,6 +11,7 @@ public class FileBrowser : MonoBehaviourPun
     string filePath;
     private Texture2D texture;
     
+    [SerializeField]
     RawImage rawImage;
     public GameObject text;
     public GameObject cube;
@@ -57,5 +58,11 @@ public class FileBrowser : MonoBehaviourPun
         }
         text.SetActive(false);
         isImg = true;
+    }
+
+    //[RequireComponent(typeof(PhotonView))]
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        stream.SendNext(rawImage);
     }
 }
