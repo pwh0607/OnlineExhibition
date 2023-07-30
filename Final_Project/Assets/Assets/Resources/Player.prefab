@@ -1011,6 +1011,7 @@ MonoBehaviour:
   camPos: {fileID: 7492995567974589634}
   complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
+  cube: {fileID: 5951467876018015586, guid: 4d914412f3e1cd54da0d2f143dc5cc3f, type: 3}
 --- !u!114 &7492995567627298360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1526,6 +1527,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7488686417901344191}
     m_Modifications:
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7492995567627298358}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: setMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6228476180151977107, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1618,9 +1647,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6228476180481542458, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6228476180481542461, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6228476180820091530, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
