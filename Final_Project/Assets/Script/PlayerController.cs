@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject camPos;
     public GameObject complete;         //텍스트
     public GameObject roomManager;
+    public GameObject cube;             //ray 충돌용 cube
+    private int now_mode;
     void Start()
     {
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         complete.SetActive(false);
         roomManager = GameObject.Find("RoomManager");
+        now_mode = 0;
     }
 
     void Update()
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     
         PlayerMove();
         SetCamPos();
+        showRay();
     }
     private void PlayerMove()
     {
@@ -77,6 +81,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         complete.SetActive(false);
     }
 
+    //버튼 컨트롤
     public void LeaveRoom()
     {
         //방을 나오고 씬이동
@@ -87,5 +92,33 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Debug.Log("방 퇴장!");
         PhotonNetwork.LoadLevel("Lobby");
         PhotonNetwork.JoinLobby();
+    }
+    public void setMode()
+    {
+        if (now_mode == 0)   //액자 생성 모드로 변경
+            now_mode = 1;
+        else if (now_mode == 1)  //기본 모드로 변경
+            now_mode = 0;
+    }
+    private void showRay()
+    {
+        if(now_mode == 1)       //액자 생성 모드인 경우.
+        {
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if(hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
+                {
+                    Debug.Log("벽에 ray가 닿았다.");
+                    cube.SetActive(true);
+                    cube.transform.position = hit.point;
+                }
+                else
+                {
+                    cube.SetActive(false);
+                }
+            }
+        }
     }
 }

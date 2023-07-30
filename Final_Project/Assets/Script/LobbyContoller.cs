@@ -31,7 +31,6 @@ public class LobbyContoller : MonoBehaviour
         currentView = visitView;
         lastView.SetActive(false);
         currentView.SetActive(true);
-
         //방 리스트 갱신.
     }
     public void OnClickMake()
