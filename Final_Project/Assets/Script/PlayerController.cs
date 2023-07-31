@@ -17,11 +17,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     //UI
     public GameObject m_UI;
-    public Camera cam;
     public GameObject camPos;
     public GameObject complete;         //텍스트
     public GameObject roomManager;
-    public GameObject cube;             //ray 충돌용 cube
+    public GameObject cubePrefab;            //ray 충돌용 cube
+    private Camera cam;
+    private GameObject cube;
+
     private int now_mode;
     void Start()
     {
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         complete.SetActive(false);
         roomManager = GameObject.Find("RoomManager");
         now_mode = 0;
+        cube = null;
     }
 
     void Update()
@@ -95,28 +98,38 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
     public void setMode()
     {
-        if (now_mode == 0)   //액자 생성 모드로 변경
+        GameObject instance = null;
+        if (now_mode == 0)      //액자 생성 모드로 변경
+        {   
             now_mode = 1;
-        else if (now_mode == 1)  //기본 모드로 변경
+            instance = Instantiate(cubePrefab);
+            cube = instance;
+        }
+        else if (now_mode == 1)     //기본 모드로 변경
+        {  
             now_mode = 0;
+            Destroy(instance);
+            cube = null;
+        }
     }
     private void showRay()
     {
         if(now_mode == 1)       //액자 생성 모드인 경우.
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            Ray ray = cam.ViewportPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 if(hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
                 {
                     Debug.Log("벽에 ray가 닿았다.");
-                    cube.SetActive(true);
+                    Debug.Log("("+Input.mousePosition.x+", " + Input.mousePosition.y+", " + Input.mousePosition.z+")");
+                    //cube.SetActive(true);
                     cube.transform.position = hit.point;
                 }
                 else
                 {
-                    cube.SetActive(false);
+                    //cube.SetActive(false);
                 }
             }
         }
