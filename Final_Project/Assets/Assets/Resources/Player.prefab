@@ -1007,11 +1007,10 @@ MonoBehaviour:
   m_moveSpeed: 4
   m_jumpForce: 5
   m_UI: {fileID: 3572350468459070345}
-  cam: {fileID: 0}
   camPos: {fileID: 7492995567974589634}
   complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
-  cube: {fileID: 5951467876018015586, guid: 4d914412f3e1cd54da0d2f143dc5cc3f, type: 3}
+  cubePrefab: {fileID: 5951467876018015586, guid: 4d914412f3e1cd54da0d2f143dc5cc3f, type: 3}
 --- !u!114 &7492995567627298360
 MonoBehaviour:
   m_ObjectHideFlags: 0
