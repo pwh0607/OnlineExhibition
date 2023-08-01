@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         m_velocity = m_velocity.normalized;
 
         m_animator.SetFloat("Move", m_velocity.magnitude);
-        Debug.Log(m_velocity.magnitude);
         transform.LookAt(transform.position + m_velocity);
 
         m_velocity.y -= gravity * Time.deltaTime;
@@ -102,28 +101,34 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (now_mode == 0)      //액자 생성 모드로 변경
         {   
             now_mode = 1;
-            instance = Instantiate(cubePrefab);
-            cube = instance;
+            if(cube == null)    //큐브가 null인 경우.
+            {
+                instance = Instantiate(cubePrefab);
+                cube = instance;
+            }
+            else
+            {
+                cube.SetActive(true);
+            }
         }
         else if (now_mode == 1)     //기본 모드로 변경
         {  
             now_mode = 0;
-            Destroy(instance);
-            cube = null;
+            Debug.Log("기본 모드로 변경");
+            cube.SetActive(false);
         }
     }
     private void showRay()
     {
         if(now_mode == 1)       //액자 생성 모드인 경우.
         {
-            Ray ray = cam.ViewportPointToRay(Input.mousePosition);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if(hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
+                if (hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
                 {
                     Debug.Log("벽에 ray가 닿았다.");
-                    Debug.Log("("+Input.mousePosition.x+", " + Input.mousePosition.y+", " + Input.mousePosition.z+")");
                     //cube.SetActive(true);
                     cube.transform.position = hit.point;
                 }
@@ -131,7 +136,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     //cube.SetActive(false);
                 }
-            }
+            }   
         }
     }
 }
