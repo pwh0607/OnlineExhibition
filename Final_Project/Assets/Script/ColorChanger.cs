@@ -4,32 +4,28 @@ using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
-    public Material red;
-    public Material green;
-
-    private Material now;
+    public Material[] mat = new Material[2];
 
     private Collider coll;
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<BoxCollider>();
-        now = GetComponent<MeshRenderer>().material;
+        GetComponent<MeshRenderer>().material = mat[0];
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Frame")
         {
-            now = red;
-            Debug.Log("´ê¾Ò´Ù!");
+            GetComponent<MeshRenderer>().material = mat[1];
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Frame")
         {
-            now = green;
+            GetComponent<MeshRenderer>().material = mat[0];
         }
     }
 }
