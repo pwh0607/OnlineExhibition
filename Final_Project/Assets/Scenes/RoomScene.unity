@@ -228,29 +228,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2000525380}
     m_Modifications:
-    - target: {fileID: 191207794271136196, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 191207794271136206, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
       propertyPath: m_Name
       value: Frame (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 921474610685203518, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3792492929161392383, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3792492929161392383, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3792492929161392383, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3792492929161392383, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
       propertyPath: m_LocalPosition.x
@@ -291,14 +275,6 @@ PrefabInstance:
     - target: {fileID: 3792492929161392383, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3796521990061272714, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 36d3efc72436ce345a7283f6c28a774e, type: 2}
-    - target: {fileID: 3796521991062166819, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3796521991811527867, guid: 2e3f1401531b66840b342563fff0f804, type: 3}
       propertyPath: sceneViewId
