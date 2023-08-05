@@ -6,6 +6,7 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
+    //움직임
     private Animator m_animator;
     private Vector3 m_velocity;                     //이동방향
     private bool m_isGrounded = true;
@@ -22,7 +23,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject roomManager;
     public GameObject cubePrefab;            //ray 충돌용 cube
     private Camera cam;
+    
+    //방 오브젝트 생성용
     private GameObject cube;
+    private GameObject colorChanger;
 
     private int now_mode;
     void Start()
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         PlayerMove();
         SetCamPos();
         showRay();
+        addFrame();
     }
     private void PlayerMove()
     {
@@ -129,14 +134,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if (hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
                 {
                     Debug.Log("벽에 ray가 닿았다.");
-                    //cube.SetActive(true);
                     cube.transform.position = hit.point;
                 }
-                else
-                {
-                    //cube.SetActive(false);
-                }
             }   
+        }
+    }
+    private void addFrame()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("액자 생성11111111111");
+            cube.GetComponent<ColorChanger>().AddFrame();
         }
     }
 }
