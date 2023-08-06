@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     Debug.Log("벽에 ray가 닿았다.");
                     cube.transform.position = hit.point;
+                    cube.transform.rotation = hit.collider.gameObject.transform.rotation;
                 }
             }   
         }

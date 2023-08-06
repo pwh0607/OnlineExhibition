@@ -40,7 +40,9 @@ public class ColorChanger : MonoBehaviour
         {
             Debug.Log("액자 생성!222222222222222");
             GameObject instance = Instantiate(framePrefab);
-            instance.transform.position = gameObject.transform.position;
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
+            instance.transform.position = pos;
+            instance.transform.rotation = transform.rotation;
         }
     }
 }
