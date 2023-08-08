@@ -145,7 +145,30 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("액자 생성11111111111");
-            cube.GetComponent<ColorChanger>().AddFrame();
+            if(cube != null || cube.activeSelf)         //큐브가 없거나 활성화 되어있는 경우.
+            {
+                //cube.GetComponent<ColorChanger>().AddFrame();
+            }
+        }
+    }
+    //액자 자세히 보기.
+    public void showFrame()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                if (hit.collider.gameObject.tag == "Frame")   //ray가 액자에 맞닿은 순간.
+                {
+                    Debug.Log("액자에 ray가 닿았다.");
+                    //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
+                    Vector3 hitObj = hit.collider.gameObject.transform.position;
+                    Vector3 camPos = new Vector3(hitObj.x, hitObj.y, hitObj.z - 9.3f);
+                    cam.transform.position = camPos;
+                }
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ public class FileBrowser : MonoBehaviourPun
         PhotonView pv = gameObject.GetComponent<PhotonView>();
         pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
+    /*
     [PunRPC]
     public void OnClickImageLoad()
     {
@@ -59,6 +60,7 @@ public class FileBrowser : MonoBehaviourPun
         text.SetActive(false);
         isImg = true;
     }
+    */
 
     //[RequireComponent(typeof(PhotonView))]
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
