@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private GameObject colorChanger;
 
     private int now_mode;
+    private bool is_show;       //frame을 보고 있는 상태 인지.
     void Start()
     {
         m_animator = GetComponent<Animator>();
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         roomManager = GameObject.Find("RoomManager");
         now_mode = 0;
         cube = null;
+        is_show = false;
     }
 
     void Update()
@@ -48,9 +50,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     
         PlayerMove();
-        SetCamPos();
         showRay();
-        addFrame();
+      //  addFrame();
+        showFrame();
+        SetCamPos();
     }
     private void PlayerMove()
     {
@@ -72,8 +75,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
     public void SetCamPos()
     {
-        cam.transform.parent = camPos.transform;
-        cam.transform.localPosition = Vector3.zero;
+        if(now_mode == 0)
+        {
+            cam.transform.parent = camPos.transform;
+            cam.transform.localPosition = Vector3.zero;
+        }
     }
 
     public void OnclickComplete()
@@ -162,6 +168,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 if (hit.collider.gameObject.tag == "Frame")   //ray가 액자에 맞닿은 순간.
                 {
+                    is_show = true;
+                    now_mode = 2;
                     Debug.Log("액자에 ray가 닿았다.");
                     //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
                     Vector3 hitObj = hit.collider.gameObject.transform.position;
