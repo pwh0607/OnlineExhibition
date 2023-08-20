@@ -44,11 +44,22 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log(nickNameField.text.Length + "글자수는 10자 미만 2글자 이상으로 해주세요.");
             setActivation();
-            Invoke("setActivation", 2.0f);
         }
         else
         {       //조건 성립시 커넥트
             Connect();
+        }
+    }
+
+    public void func1()
+    {
+        if (warnMsg.active)
+        {
+            //활성화 상태에서 배경 터치시 제거
+            if (Input.GetMouseButtonDown(0))
+            {
+                warnMsg.SetActive(false);
+            }
         }
     }
 }
