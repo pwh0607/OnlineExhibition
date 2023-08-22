@@ -11,11 +11,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     private string userNickname;
     public InputField nickNameField;
     public GameObject warnMsg;
+    public GameObject ConnectMsg;
     public Button startBtn;
 
     private void Start()
     {
         warnMsg.SetActive(false);
+        ConnectMsg.SetActive(false);
     }
     //서버 연결
     public void Connect()
