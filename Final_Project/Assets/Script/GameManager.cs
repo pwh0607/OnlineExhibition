@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {       //조건 성립시 커넥트
+            ConnectMsg.SetActive(true);
             Connect();
         }
     }
