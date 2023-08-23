@@ -12,6 +12,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
     public GameObject playerPos;
     public GameObject frames;
+    private int now_mode;
+
     public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
     {
         get
@@ -81,6 +83,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         
+    }
+    public int UpdateMode()
+    {
+        return now_mode;
     }
 
     //플레이어 입장 콜백

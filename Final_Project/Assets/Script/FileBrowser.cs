@@ -10,7 +10,8 @@ public class FileBrowser : MonoBehaviourPun
 {
     string filePath;
     private Texture2D texture;
-    
+    private bool now_mode;
+
     [SerializeField]
     RawImage rawImage;
     public GameObject text;
