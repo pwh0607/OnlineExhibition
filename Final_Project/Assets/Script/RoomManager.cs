@@ -84,7 +84,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         
     }
-    public int UpdateMode()
+    public void UpdateMode(int mode)
+    {
+        this.now_mode = mode;
+    }
+    public int GetMode()
     {
         return now_mode;
     }

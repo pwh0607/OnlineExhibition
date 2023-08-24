@@ -10,7 +10,6 @@ public class FileBrowser : MonoBehaviourPun
 {
     string filePath;
     private Texture2D texture;
-    private bool now_mode;
 
     [SerializeField]
     RawImage rawImage;
@@ -30,7 +29,6 @@ public class FileBrowser : MonoBehaviourPun
         PhotonView pv = gameObject.GetComponent<PhotonView>();
         pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
-    /*
     [PunRPC]
     public void OnClickImageLoad()
     {
@@ -61,7 +59,6 @@ public class FileBrowser : MonoBehaviourPun
         text.SetActive(false);
         isImg = true;
     }
-    */
 
     //[RequireComponent(typeof(PhotonView))]
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

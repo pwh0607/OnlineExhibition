@@ -5,26 +5,25 @@ using UnityEngine;
 public class FrameContoller : MonoBehaviour
 {
     public Camera cam;
-    private GameObject gameManager;
+    private GameObject roomManager;
     private void Start()
     {
-        gameManager = GameObject.Find("GameManager");
+        roomManager = GameObject.Find("RoomManager");
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {/*
+        if (Input.GetMouseButtonDown(0)&& roomManager.GetComponent<RoomManager>().GetMode() == 1)
+        {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 if (hit.transform.gameObject.tag == "Frame")
                 {
-                    GetComponent<FileBrowser>().OpenBrowser();
+                    GetComponent<FileBrowser>().OnClickImageLoad();
                 }
             }
-            */
         }
     }
 

@@ -109,10 +109,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void setMode()
     {
         GameObject instance = null;
-        if (now_mode == 0)      //액자 생성 모드로 변경
+        if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //액자 생성 모드로 변경
         {   
-            now_mode = 1;
-            if(cube == null)    //큐브가 null인 경우.
+            roomManager.GetComponent<RoomManager>().UpdateMode(1);
+            if (cube == null)    //큐브가 null인 경우.
             {
                 instance = Instantiate(cubePrefab);
                 cube = instance;
@@ -122,16 +122,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 cube.SetActive(true);
             }
         }
-        else if (now_mode == 1)     //기본 모드로 변경
-        {  
-            now_mode = 0;
+        else if (roomManager.GetComponent<RoomManager>().GetMode() == 1)     //기본 모드로 변경
+        {
+            roomManager.GetComponent<RoomManager>().UpdateMode(0);
             Debug.Log("기본 모드로 변경");
             cube.SetActive(false);
         }
     }
     private void showRay()
     {
-        if(now_mode == 1)       //액자 생성 모드인 경우.
+        if(roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
