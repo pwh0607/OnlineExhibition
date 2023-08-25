@@ -171,10 +171,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     is_show = true;
                     now_mode = 2;
                     Debug.Log("액자에 ray가 닿았다.");
-                    //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
-                    Vector3 hitObj = hit.collider.gameObject.transform.position;
-                    Vector3 camPos = new Vector3(hitObj.x, hitObj.y, hitObj.z - 9.3f);
-                    cam.transform.position = camPos;
+                    if (roomManager.GetComponent<RoomManager>().GetMode() == 0) //일반 모드
+                    {
+                        //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
+                        Vector3 hitObj = hit.collider.gameObject.transform.position;
+                        Vector3 camPos = new Vector3(hitObj.x, hitObj.y, hitObj.z - 9.3f);
+                        cam.transform.position = camPos;
+                    }
                 }
             }
         }
