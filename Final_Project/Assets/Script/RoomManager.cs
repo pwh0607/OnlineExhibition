@@ -40,6 +40,17 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        //complete.SetActive(false);
+        Vector3 randomSpawnPos = playerPos.transform.position;      //Random.insideUnitSphere * 5f;
+        // 네트워크상의 모든 클라이언트에서 생성 실행  
+        // 해당 게임 오브젝트의 주도권은 생성 메서드를 직접 실행한 클라이언트에 있음
+        PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
+        now_mode = 0;
+    }
+
     public void removeFrame()
     {
         for(int i = 0; i < 5; i++)
@@ -50,14 +61,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    private void Start()
-    {
-        //complete.SetActive(false);
-        Vector3 randomSpawnPos = playerPos.transform.position;//Random.insideUnitSphere * 5f;
-        // 네트워크상의 모든 클라이언트에서 생성 실행  
-        // 해당 게임 오브젝트의 주도권은 생성 메서드를 직접 실행한 클라이언트에 있음
-        PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
-    }
+
     public void CompleteEx()
     {
         complete.SetActive(true);
@@ -80,10 +84,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
         //base.OnLeftRoom();
     }
-    public override void OnJoinedRoom()
-    {
-        
-    }
+
     public void UpdateMode(int mode)
     {
         this.now_mode = mode;

@@ -20,7 +20,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
     {
         Debug.Log("Joystick >>> OnDrag()");
         Vector2 pos;
-
         //배경 영역에 터치가 발생할 때
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(imgBG.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
         {

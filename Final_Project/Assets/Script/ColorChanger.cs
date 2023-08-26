@@ -7,8 +7,8 @@ public class ColorChanger : MonoBehaviour
     public Material[] mat = new Material[2];
     private bool is_create;
     public GameObject framePrefab;
-
     private Collider coll;
+
     // Start is called before the first frame update
     void Start()
     {

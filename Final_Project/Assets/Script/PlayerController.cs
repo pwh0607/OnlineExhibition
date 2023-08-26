@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject complete;         //텍스트
     public GameObject roomManager;
     public GameObject cubePrefab;            //ray 충돌용 cube
+    public GameObject masterPart;
+
     private Camera cam;
     
     //방 오브젝트 생성용
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private int now_mode;
     private bool is_show;       //frame을 보고 있는 상태 인지.
+
     void Start()
     {
         m_animator = GetComponent<Animator>();
@@ -48,10 +51,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             m_UI.SetActive(false);
             return;
         }
+
+        if (!PhotonNetwork.IsMasterClient)           //방주인인 경우.
+        {
+            masterPart.SetActive(false);
+        }
     
         PlayerMove();
         showRay();
-      //  addFrame();
+        //addFrame();
         showFrame();
         SetCamPos();
     }
@@ -171,7 +179,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     is_show = true;
                     now_mode = 2;
                     Debug.Log("액자에 ray가 닿았다.");
-                    if (roomManager.GetComponent<RoomManager>().GetMode() == 0) //일반 모드
+                    if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //일반 모드
                     {
                         //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
                         Vector3 hitObj = hit.collider.gameObject.transform.position;
