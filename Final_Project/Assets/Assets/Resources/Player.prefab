@@ -1011,6 +1011,7 @@ MonoBehaviour:
   complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
   cubePrefab: {fileID: 5951467876018015586, guid: 4d914412f3e1cd54da0d2f143dc5cc3f, type: 3}
+  masterPart: {fileID: 228038901935785686}
 --- !u!114 &7492995567627298360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1660,6 +1661,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+--- !u!1 &228038901935785686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7266100501680999522, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+  m_PrefabInstance: {fileID: 7492995567897905844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3572350467268769886 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6228476181711221482, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
