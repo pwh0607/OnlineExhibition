@@ -36,13 +36,14 @@ public class ColorChanger : MonoBehaviour
 
     public void AddFrame()
     {
+        Debug.Log("생성 가능 상태 : " + is_create);
         if (is_create)      //생성 가능 상태인 경우.
         {
             Debug.Log("액자 생성!222222222222222");
             GameObject instance = Instantiate(framePrefab);
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
             instance.transform.position = pos;
-            instance.transform.rotation = transform.rotation;
+            instance.transform.rotation = gameObject.transform.rotation;
         }
     }
 }

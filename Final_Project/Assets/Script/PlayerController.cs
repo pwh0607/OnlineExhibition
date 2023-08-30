@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     
         PlayerMove();
         showRay();
-        //addFrame();
+        addFrame();
         showFrame();
         SetCamPos();
     }
@@ -159,9 +159,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("액자 생성11111111111");
-            if(cube != null || cube.activeSelf)         //큐브가 없거나 활성화 되어있는 경우.
+           if(cube != null || cube.activeSelf)         //큐브가 존재하고, 활성화 되어있는 경우.
             {
-                //cube.GetComponent<ColorChanger>().AddFrame();
+                cube.GetComponent<ColorChanger>().AddFrame();
             }
         }
     }
