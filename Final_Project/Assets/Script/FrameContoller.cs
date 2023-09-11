@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FrameContoller : MonoBehaviour
 {
@@ -13,18 +14,26 @@ public class FrameContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && roomManager.GetComponent<RoomManager>().GetMode() == 0)
+        SetImg();
+    }
+
+
+    void SetImg()
+    {
+        if (PhotonNetwork.IsMasterClient)       //방장인 경우
         {
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Input.GetMouseButtonDown(0) && roomManager.GetComponent<RoomManager>().GetMode() == 0)      //기본 모드 이고...
             {
-                if (hit.transform.gameObject.tag == "Frame")
+                RaycastHit hit;
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    GetComponent<FileBrowser>().OnClickImageLoad();
+                    if (hit.transform.gameObject.tag == "Frame")
+                    {
+                        GetComponent<FileBrowser>().OnClickImageLoad();
+                    }
                 }
             }
         }
     }
-
 }

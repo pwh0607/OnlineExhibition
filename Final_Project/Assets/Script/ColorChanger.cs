@@ -14,7 +14,7 @@ public class ColorChanger : MonoBehaviour
     {
         coll = GetComponent<BoxCollider>();
         GetComponent<MeshRenderer>().material = mat[0];
-        is_create = false;
+        is_create = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,7 +42,6 @@ public class ColorChanger : MonoBehaviour
             Debug.Log("액자 생성!222222222222222");
             GameObject instance = Instantiate(framePrefab);
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
-            //Quaternion rot = Quaternion.Euler(transform.rotation.x - 90.0f, transform.rotation.y + 180.0f, transform.rotation.z);
             instance.transform.position = pos;
             instance.transform.rotation = transform.rotation;
         }

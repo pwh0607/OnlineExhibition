@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -21,13 +22,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject camPos;
     public GameObject complete;         //텍스트
     public GameObject roomManager;
-    public GameObject cubePrefab;            //ray 충돌용 cube
     public GameObject masterPart;
 
     private Camera cam;
-    
+
     //방 오브젝트 생성용
-    private GameObject cube;
+    public GameObject cube;            //ray 충돌용 cube
     private GameObject colorChanger;
 
     private int now_mode;
@@ -39,9 +39,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         complete.SetActive(false);
         roomManager = GameObject.Find("RoomManager");
-        now_mode = 0;
-        cube = null;
         is_show = false;
+        cube.SetActive(false);
     }
 
     void Update()
@@ -56,7 +55,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             masterPart.SetActive(false);
         }
-    
+        
         PlayerMove();
         showRay();
         addFrame();
@@ -95,6 +94,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         complete.SetActive(true);
         roomManager.GetComponent<RoomManager>().removeFrame();
         Invoke("DesText", 2.0f);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomState", "Waiting" } });
     }
 
     public void DesText()
@@ -116,19 +116,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
     public void setMode()
     {
-        GameObject instance = null;
         if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //액자 생성 모드로 변경
         {   
             roomManager.GetComponent<RoomManager>().UpdateMode(1);
-            if (cube == null)    //큐브가 null인 경우.
-            {
-                instance = Instantiate(cubePrefab);
-                cube = instance;
-            }
-            else
-            {
-                cube.SetActive(true);
-            }
+            cube.SetActive(true);
         }
         else if (roomManager.GetComponent<RoomManager>().GetMode() == 1)     //기본 모드로 변경
         {
@@ -158,17 +149,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("액자 생성11111111111");
-           if(cube != null || cube.activeSelf)         //큐브가 존재하고, 활성화 되어있는 경우.
-            {
-                cube.GetComponent<ColorChanger>().AddFrame();
-            }
+            cube.GetComponent<ColorChanger>().AddFrame();
         }
     }
     //액자 자세히 보기.
     public void showFrame()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !PhotonNetwork.IsMasterClient)      //방 주인이 아닌 경우.     
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
