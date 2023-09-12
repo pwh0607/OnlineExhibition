@@ -1012,6 +1012,7 @@ MonoBehaviour:
   complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
   masterPart: {fileID: 228038901935785686}
+  under_UI: {fileID: 3856632453920046628}
   cube: {fileID: 5987984292688280383}
 --- !u!114 &7492995567627298360
 MonoBehaviour:
@@ -1739,6 +1740,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8511585630702798013, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7492452204117333189}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
 --- !u!1 &228038901935785686 stripped
@@ -1772,3 +1777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591c594a7bfa6c341bd35efcfcd1722b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3856632453920046628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5943050617009484944, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+  m_PrefabInstance: {fileID: 7492995567897905844}
+  m_PrefabAsset: {fileID: 0}

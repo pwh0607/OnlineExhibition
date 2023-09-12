@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject complete;         //≈ÿΩ∫∆Æ
     public GameObject roomManager;
     public GameObject masterPart;
+    public GameObject under_UI;
 
     private Camera cam;
 
@@ -96,7 +97,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         Invoke("DesText", 2.0f);
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomState", "Waiting" } });
     }
-
     public void DesText()
     {
         complete.SetActive(false);
@@ -145,6 +145,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }   
         }
     }
+
+    public void OnClickShowBtn()
+    {
+        under_UI.SetActive(!under_UI.activeSelf);
+    }
+
     private void addFrame()
     {
         if (Input.GetMouseButtonDown(0))
