@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public GameObject roomManager;
     public GameObject masterPart;
     public GameObject under_UI;
+    public GameObject frames;
 
     private Camera cam;
 
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         complete.SetActive(false);
         roomManager = GameObject.Find("RoomManager");
+        frames = GameObject.Find("Frames");
         is_show = false;
         cube.SetActive(false);
     }

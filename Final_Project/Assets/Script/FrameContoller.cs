@@ -5,11 +5,13 @@ using Photon.Pun;
 
 public class FrameContoller : MonoBehaviour
 {
+   // public Camera cam;
     public Camera cam;
     private GameObject roomManager;
     private void Start()
     {
         roomManager = GameObject.Find("RoomManager");
+        cam = GameObject.Find("mainCam").GetComponent<Camera>();
     }
     // Update is called once per frame
     void Update()
