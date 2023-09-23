@@ -97,9 +97,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         //cachedRoomList.Clear();
         Debug.Log("---------------리스트 업데이트-----------------");
         Debug.Log($"방개수 : {roomList.Count}");
+
         for (int i = 0; i < roomList.Count; i++)
         {
-            Button instance = Instantiate(RoomBtnPrefab);
+            Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
             instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
             RectTransform btnPos = instance.GetComponent<RectTransform>();
             instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
@@ -111,7 +112,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             btnPos.pivot = dir;
 
             //설정후 RectTransform 변경.
-            btnPos.anchoredPosition = new Vector2(0, -30);
+            btnPos.anchoredPosition = new Vector2(0, -40);
         }
         for (int i = 0; i < roomList.Count; i++)
         {
