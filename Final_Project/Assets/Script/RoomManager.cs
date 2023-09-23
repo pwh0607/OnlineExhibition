@@ -45,7 +45,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         //complete.SetActive(false);
-        Vector3 randomSpawnPos = playerPos.transform.position;      //Random.insideUnitSphere * 5f;
+        Vector3 randomSpawnPos = playerPos.transform.position;
         // 네트워크상의 모든 클라이언트에서 생성 실행  
         // 해당 게임 오브젝트의 주도권은 생성 메서드를 직접 실행한 클라이언트에 있음
         PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);

@@ -7,12 +7,14 @@ public class ColorChanger : MonoBehaviour
     public Material[] mat = new Material[2];
     private bool is_create;
     public GameObject framePrefab;
+    public GameObject frames;
     private Collider coll;
 
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<BoxCollider>();
+        frames = GameObject.Find("Frames");
         GetComponent<MeshRenderer>().material = mat[0];
         is_create = true;
     }
@@ -36,14 +38,13 @@ public class ColorChanger : MonoBehaviour
 
     public void AddFrame()
     {
-        Debug.Log("생성 가능 상태 : " + is_create);
         if (is_create)      //생성 가능 상태인 경우.
         {
-            Debug.Log("액자 생성!222222222222222");
             GameObject instance = Instantiate(framePrefab);
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
             instance.transform.position = pos;
             instance.transform.rotation = transform.rotation;
+            //instance.transform.SetParent(frames.transform);
         }
     }
 }

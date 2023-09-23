@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -54,16 +55,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (!PhotonNetwork.IsMasterClient)           //방주인인 경우.
+        if (!PhotonNetwork.IsMasterClient)          
         {
             masterPart.SetActive(false);
+          //  showFrame();
         }
-        
+        else {                                     
+            SetImg();
+        }
+
         PlayerMove();
-        showRay();
+        showCube();
         addFrame();
-        showFrame();
         SetCamPos();
+        SetImg();
     }
     private void PlayerMove()
     {
@@ -98,6 +103,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         roomManager.GetComponent<RoomManager>().removeFrame();
         Invoke("DesText", 2.0f);
         PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomState", "Waiting" } });
+
     }
     public void DesText()
     {
@@ -130,17 +136,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             cube.SetActive(false);
         }
     }
-    private void showRay()
+    private void showCube()
     {
         if(roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
                 {
-                    Debug.Log("벽에 ray가 닿았다.");
                     cube.transform.position = hit.point;
                     cube.transform.rotation = hit.collider.gameObject.transform.rotation;
                 }
@@ -155,7 +160,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void addFrame()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && cube.activeSelf)
         {
             cube.GetComponent<ColorChanger>().AddFrame();
         }
@@ -163,7 +168,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //액자 자세히 보기.
     public void showFrame()
     {
-        if (Input.GetMouseButtonDown(0) && !PhotonNetwork.IsMasterClient)      //방 주인이 아닌 경우.     
+        if (Input.GetMouseButtonDown(0))      //방 주인이 아닌 경우.     
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -183,6 +188,41 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     }
                 }
             }
+        }
+    }
+
+    //액자 이미지 세팅
+    public void SetImg()
+    {
+        if (Input.GetMouseButtonDown(0) && roomManager.GetComponent<RoomManager>().GetMode() == 0)      //기본 모드 이고...
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("액자 클릭!!");
+                if (hit.collider.tag == "Frame")
+                {
+                    Debug.Log("액자 명 : " + hit.collider.gameObject.name);
+                    hit.collider.gameObject.GetComponent<FileBrowser>().OnClickImageLoad();
+                }
+            }
+        }   
+    }
+
+    //Frame 버튼 관련
+    public void OnPointerEnter()
+    {
+        this.cube.SetActive(false);
+    }
+
+    public void OnPointerExit()
+    {
+        //포인터가 밖으로 나왔을때 모드에 맞도록...
+        if (roomManager.GetComponent<RoomManager>().GetMode() == 1)      //
+        {
+            Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
+            this.cube.SetActive(true);
         }
     }
 }
