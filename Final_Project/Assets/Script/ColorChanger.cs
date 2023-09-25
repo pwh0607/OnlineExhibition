@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class ColorChanger : MonoBehaviour
 {
     public Material[] mat = new Material[2];
@@ -40,11 +41,8 @@ public class ColorChanger : MonoBehaviour
     {
         if (is_create)      //생성 가능 상태인 경우.
         {
-            GameObject instance = Instantiate(framePrefab);
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
-            instance.transform.position = pos;
-            instance.transform.rotation = transform.rotation;
-            //instance.transform.SetParent(frames.transform);
+            GameObject instance = PhotonNetwork.InstantiateRoomObject(framePrefab.name,pos, transform.rotation);
         }
     }
 }
