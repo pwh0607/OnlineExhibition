@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
+
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     //움직임
@@ -102,8 +103,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         complete.SetActive(true);
         roomManager.GetComponent<RoomManager>().removeFrame();
         Invoke("DesText", 2.0f);
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomState", "Waiting" } });
 
+        //방 공개 여부 open
+        PhotonNetwork.CurrentRoom.IsOpen = true;
+        
     }
     public void DesText()
     {

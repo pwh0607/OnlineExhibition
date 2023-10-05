@@ -47,8 +47,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
+        //방 옵션 생성
+        RoomOptions options = new RoomOptions();
+
+        options.IsOpen = false;
+
         //방 생성하기.
-        PhotonNetwork.CreateRoom(makeRoomName, new RoomOptions { MaxPlayers = 5 });
+        PhotonNetwork.CreateRoom(makeRoomName, options, null);
     }
     //방 버튼 클릭시!
     public void OnClickRoom(string roomName)
@@ -100,19 +105,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < roomList.Count; i++)
         {
-            Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
-            instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
-            RectTransform btnPos = instance.GetComponent<RectTransform>();
-            instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
+            //방의 상태가 Open인 경우만...
+            if (roomList[i].IsOpen)
+            {
+                Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
+                instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
+                RectTransform btnPos = instance.GetComponent<RectTransform>();
+                instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
 
-            //버튼 앵커 설정
-            Vector2 dir = new Vector2(0.5f, 1);
-            btnPos.anchorMin = dir;
-            btnPos.anchorMax = dir;
-            btnPos.pivot = dir;
+                //버튼 앵커 설정
+                Vector2 dir = new Vector2(0.5f, 1);
+                btnPos.anchorMin = dir;
+                btnPos.anchorMax = dir;
+                btnPos.pivot = dir;
 
-            //설정후 RectTransform 변경.
-            btnPos.anchoredPosition = new Vector2(0, -40);
+                //설정후 RectTransform 변경.
+                btnPos.anchoredPosition = new Vector2(0, -40);
+            }
         }
         for (int i = 0; i < roomList.Count; i++)
         {
