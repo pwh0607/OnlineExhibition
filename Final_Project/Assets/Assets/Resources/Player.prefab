@@ -927,6 +927,7 @@ GameObject:
   - component: {fileID: 7492995567627298360}
   - component: {fileID: 7492995567627298362}
   - component: {fileID: 7492995567627298363}
+  - component: {fileID: 3442058002514573588}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1007,10 +1008,11 @@ MonoBehaviour:
   sJoystick: {fileID: 3572350468597866227}
   m_moveSpeed: 4
   m_jumpForce: 5
-  m_UI: {fileID: 3572350468459070345}
   camPos: {fileID: 7492995567974589634}
-  complete: {fileID: 3572350467268769886}
   roomManager: {fileID: 0}
+  ui_ctrl: {fileID: 0}
+  m_UI: {fileID: 3572350468459070345}
+  complete: {fileID: 3572350467268769886}
   masterPart: {fileID: 228038901935785686}
   under_UI: {fileID: 3856632453920046628}
   frames: {fileID: 0}
@@ -1076,6 +1078,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &3442058002514573588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7492452204117333189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443b115d919e6034eb9b3c2604d4fe38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_ctrl: {fileID: 0}
 --- !u!1 &7492487073983452267
 GameObject:
   m_ObjectHideFlags: 0
