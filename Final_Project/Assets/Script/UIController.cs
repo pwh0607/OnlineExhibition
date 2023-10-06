@@ -4,33 +4,22 @@ using UnityEngine.UI;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-
-public class PlayerController : MonoBehaviourPunCallbacks
+public class UIController : MonoBehaviourPunCallbacks
 {
-    //움직임
-    private Animator m_animator;
-    private Vector3 m_velocity;                     //이동방향
-    private bool m_isGrounded = true;
-    private bool m_jumpOn = false;
-
-    public JoyStick sJoystick;
-    public float m_moveSpeed = 2.0f;
-    public float m_jumpForce = 5.0f;
+    private PlayerController player_ctrl;
 
     public GameObject camPos;
     public GameObject roomManager;
-    private UIController ui_ctrl;
+    public UIController ui_ctrl;
     private Camera cam;
 
     //UI
     public GameObject m_UI;
     public GameObject complete;//텍스트
     public GameObject masterPart;
-    public GameObject under_UI;   
+    public GameObject under_UI;
     public GameObject frames;
-
 
     //방 오브젝트 생성용
     public GameObject cube;            //ray 충돌용 cube
@@ -41,7 +30,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         complete.SetActive(false);
         roomManager = GameObject.Find("RoomManager");
@@ -49,6 +37,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         ui_ctrl = GetComponent<UIController>();
         is_show = false;
         cube.SetActive(false);
+        player_ctrl = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -58,43 +47,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
             m_UI.SetActive(false);
             return;
         }
-
-        if (!PhotonNetwork.IsMasterClient)          
+        if (!PhotonNetwork.IsMasterClient)
         {
             masterPart.SetActive(false);
-          //  showFrame();
-        }
-        else {                                     
-            SetImg();
         }
 
-        PlayerMove();
         showCube();
         addFrame();
         SetCamPos();
         SetImg();
     }
-    private void PlayerMove()
-    {
-        CharacterController controller = GetComponent<CharacterController>();
-        float gravity = 20.0f;              //강한 중력을 주어
-
-        float h = sJoystick.GetHorizontalValue();
-        float v = sJoystick.GetVerticalValue();
-        m_velocity = new Vector3(h, 0, v);
-        m_velocity = m_velocity.normalized;
-
-        m_animator.SetFloat("Move", m_velocity.magnitude);
-        transform.LookAt(transform.position + m_velocity);
-
-        m_velocity.y -= gravity * Time.deltaTime;
-        controller.Move(m_velocity * m_moveSpeed * Time.deltaTime);
-
-        m_isGrounded = controller.isGrounded;
-    }
     public void SetCamPos()
     {
-        if(now_mode == 0)
+        if (now_mode == 0)
         {
             cam.transform.parent = camPos.transform;
             cam.transform.localPosition = Vector3.zero;
@@ -109,7 +74,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //방 공개 여부 open
         PhotonNetwork.CurrentRoom.IsOpen = true;
-        
     }
     public void DesText()
     {
@@ -122,6 +86,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //방을 나오고 씬이동
         PhotonNetwork.LeaveRoom();
     }
+
     public override void OnLeftRoom()
     {
         Debug.Log("방 퇴장!");
@@ -131,7 +96,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void setMode()
     {
         if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //액자 생성 모드로 변경
-        {   
+        {
             roomManager.GetComponent<RoomManager>().UpdateMode(1);
             cube.SetActive(true);
         }
@@ -144,7 +109,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
     private void showCube()
     {
-        if(roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
+        if (roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -155,7 +120,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     cube.transform.position = hit.point;
                     cube.transform.rotation = hit.collider.gameObject.transform.rotation;
                 }
-            }   
+            }
         }
     }
 
@@ -213,7 +178,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     hit.collider.gameObject.GetComponent<FileBrowser>().OnClickImageLoad();
                 }
             }
-        }   
+        }
     }
 
     //Frame 버튼 관련
