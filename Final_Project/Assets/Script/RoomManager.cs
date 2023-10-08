@@ -9,7 +9,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public GameObject complete;             //완료 텍스트
     public GameObject playerPrefab;
     public GameObject playerPos;
     public GameObject frames;
@@ -62,17 +61,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 Destroy(frames.transform.GetChild(i).gameObject);       //이미지가 없으면 삭제.
             }
         }
-    }
-
-    public void CompleteEx()
-    {
-        complete.SetActive(true);
-        Invoke("setFalseText", 2.0f);
-    }
-
-    private void setFalseText()
-    {
-        complete.SetActive(false);
     }
     public void LeaveRoom() {
         //방을 나오고 씬이동

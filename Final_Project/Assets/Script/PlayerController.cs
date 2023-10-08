@@ -6,7 +6,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     //움직임
@@ -20,7 +19,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float m_jumpForce = 5.0f;
 
     public GameObject camPos;
-    public GameObject roomManager;
+    GameObject roomManager;
     private UIController ui_ctrl;
     private Camera cam;
 
@@ -41,10 +40,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        roomManager = GameObject.Find("RoomManager");
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         complete.SetActive(false);
-        roomManager = GameObject.Find("RoomManager");
         frames = GameObject.Find("Frames");
         ui_ctrl = GetComponent<UIController>();
         is_show = false;
@@ -128,20 +127,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Lobby");
         PhotonNetwork.JoinLobby();
     }
-    public void setMode()
-    {
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //액자 생성 모드로 변경
-        {   
-            roomManager.GetComponent<RoomManager>().UpdateMode(1);
-            cube.SetActive(true);
-        }
-        else if (roomManager.GetComponent<RoomManager>().GetMode() == 1)     //기본 모드로 변경
-        {
-            roomManager.GetComponent<RoomManager>().UpdateMode(0);
-            Debug.Log("기본 모드로 변경");
-            cube.SetActive(false);
-        }
-    }
+
     private void showCube()
     {
         if(roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
@@ -157,11 +143,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
             }   
         }
-    }
-
-    public void OnClickShowBtn()
-    {
-        under_UI.SetActive(!under_UI.activeSelf);
     }
 
     private void addFrame()
@@ -217,11 +198,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     }
 
     //Frame 버튼 관련
-    public void OnPointerEnter()
-    {
-        this.cube.SetActive(false);
-    }
-
     public void OnPointerExit()
     {
         //포인터가 밖으로 나왔을때 모드에 맞도록...
