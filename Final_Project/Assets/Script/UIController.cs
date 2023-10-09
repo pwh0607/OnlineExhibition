@@ -59,7 +59,7 @@ public class UIController : MonoBehaviourPunCallbacks
             masterPart.SetActive(false);
         }
 
-      //  showCube();
+        showCube();
         addFrame();
     }
 
@@ -113,40 +113,21 @@ public class UIController : MonoBehaviourPunCallbacks
         Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
         revise_part.SetActive(true);
         normal_part.SetActive(false);
-        //roomManager.GetComponent<RoomManager>().UpdateMode(1);
     }
+
+    public void OnClickShowCube()
+    {
+        //큐브 생성.
+        roomManager.GetComponent<RoomManager>().UpdateMode(1);
+    }
+
     public void OnClickSetNormal()
     {
         //방 수정 모드로 변경.
         Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
         normal_part.SetActive(true);
         revise_part.SetActive(false);
-        //roomManager.GetComponent<RoomManager>().UpdateMode(0);
-    }
-    public void setMode()
-    {
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 0)         //일반 모드 인경우.
-        {
-
-        }
-        else if (roomManager.GetComponent<RoomManager>().GetMode() == 1)    //수정 모드인 경우.
-        {
-
-        }
-
-        /*
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //액자 생성 모드로 변경
-        {
-            roomManager.GetComponent<RoomManager>().UpdateMode(1);
-            cube.SetActive(true);
-        }
-        else if (roomManager.GetComponent<RoomManager>().GetMode() == 1)     //기본 모드로 변경
-        {
-            roomManager.GetComponent<RoomManager>().UpdateMode(0);
-            Debug.Log("기본 모드로 변경");
-            cube.SetActive(false);
-        }
-        */
+        roomManager.GetComponent<RoomManager>().UpdateMode(0);
     }
     private void showCube()
     {

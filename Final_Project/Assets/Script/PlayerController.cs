@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         PlayerMove();
-        showCube();
         addFrame();
         SetCamPos();
         SetImg();
@@ -108,7 +107,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //방 공개 여부 open
         PhotonNetwork.CurrentRoom.IsOpen = true;
-        
     }
     public void DesText()
     {
@@ -127,24 +125,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Lobby");
         PhotonNetwork.JoinLobby();
     }
-
-    private void showCube()
-    {
-        if(roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
-                {
-                    cube.transform.position = hit.point;
-                    cube.transform.rotation = hit.collider.gameObject.transform.rotation;
-                }
-            }   
-        }
-    }
-
     private void addFrame()
     {
         if (Input.GetMouseButtonDown(0) && cube.activeSelf)
@@ -165,7 +145,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 {
                     is_show = true;
                     now_mode = 2;
-                    Debug.Log("액자에 ray가 닿았다.");
                     if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //일반 모드
                     {
                         //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
@@ -197,14 +176,4 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }   
     }
 
-    //Frame 버튼 관련
-    public void OnPointerExit()
-    {
-        //포인터가 밖으로 나왔을때 모드에 맞도록...
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 1)      //
-        {
-            Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
-            this.cube.SetActive(true);
-        }
-    }
 }
