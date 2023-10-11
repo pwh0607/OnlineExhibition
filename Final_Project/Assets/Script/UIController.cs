@@ -62,15 +62,10 @@ public class UIController : MonoBehaviourPunCallbacks
         showCube();
         addFrame();
     }
-
-    public void OnclickComplete()
+    public void OnClickOpen()
     {
-        complete.SetActive(true);
-        roomManager.GetComponent<RoomManager>().removeFrame();
-        Invoke("DesText", 2.0f);
-
-        //방 공개 여부 open
         PhotonNetwork.CurrentRoom.IsOpen = true;
+        Debug.Log("오픈 완료!");
     }
     public void DesText()
     {

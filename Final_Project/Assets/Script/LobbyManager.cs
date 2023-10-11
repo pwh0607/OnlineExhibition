@@ -92,7 +92,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("방 입장 실패" + message);
+        Debug.Log("방 입장 실패 : " + message);
         base.OnJoinRandomFailed(returnCode, message);
     }
     //방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
@@ -106,7 +106,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < roomList.Count; i++)
         {
             //방의 상태가 Open인 경우만...
-            if (roomList[i].IsOpen)
+           // if (roomList[i].IsOpen)
             {
                 Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
                 instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
