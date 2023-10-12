@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName+" : 로비 참가 성공!");
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
     private void setActivation()
     {
