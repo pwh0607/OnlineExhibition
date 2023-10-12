@@ -25,10 +25,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     //UI
     public GameObject m_UI;
-    public GameObject complete;//텍스트
     public GameObject masterPart;
-    public GameObject under_UI;   
-    public GameObject frames;
 
 
     //방 오브젝트 생성용
@@ -43,8 +40,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         roomManager = GameObject.Find("RoomManager");
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
-        complete.SetActive(false);
-        frames = GameObject.Find("Frames");
         ui_ctrl = GetComponent<UIController>();
         is_show = false;
         cube.SetActive(false);
@@ -97,20 +92,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             cam.transform.parent = camPos.transform;
             cam.transform.localPosition = Vector3.zero;
         }
-    }
-
-    public void OnclickComplete()
-    {
-        complete.SetActive(true);
-        roomManager.GetComponent<RoomManager>().removeFrame();
-        Invoke("DesText", 2.0f);
-
-        //방 공개 여부 open
-        PhotonNetwork.CurrentRoom.IsOpen = true;
-    }
-    public void DesText()
-    {
-        complete.SetActive(false);
     }
 
     //버튼 컨트롤

@@ -741,7 +741,7 @@ Camera:
   m_GameObject: {fileID: 1271768351}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7492452204117333189, guid: 8d54d572fc004fa48acd8300a20cb131, type: 3}
   playerPos: {fileID: 429612027}
-  frames: {fileID: 2000525379}
+  completeText: {fileID: 2206707853390945966, guid: eca661e1ee397d44f9f41a6e3560f6e2, type: 3}
 --- !u!114 &2002036577
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public GameObject playerPrefab;
     public GameObject playerPos;
-    public GameObject frames;
+
     private int now_mode;
 
     public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
@@ -49,17 +49,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
         setProperties();
         now_mode = 0;
-    }
-
-    public void removeFrame()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            if (frames.transform.GetChild(i).gameObject.GetComponent<FileBrowser>().isImg == false)
-            {
-                Destroy(frames.transform.GetChild(i).gameObject);       //이미지가 없으면 삭제.
-            }
-        }
     }
     public void LeaveRoom() {
         //방을 나오고 씬이동

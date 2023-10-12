@@ -10,19 +10,15 @@ public class UIController : MonoBehaviourPunCallbacks
     private PlayerController player_ctrl;
     
     public GameObject roomManager;
-    UIController ui_ctrl;
     private Camera cam;
 
     //UI
     public GameObject m_UI;
-    public GameObject complete;//텍스트
     public GameObject masterPart;
-    public GameObject under_UI;
-    public GameObject frames;
+    public GameObject completeText;
 
     //방 오브젝트 생성용
     public GameObject cube;            //ray 충돌용 cube
-    private GameObject colorChanger;
 
     private bool menu_clicked = false;
 
@@ -37,9 +33,6 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         roomManager = GameObject.Find("RoomManager");
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
-        complete.SetActive(false);
-        frames = GameObject.Find("Frames");
-        ui_ctrl = GetComponent<UIController>();
         is_show = false;
         cube.SetActive(false);
         player_ctrl = GetComponent<PlayerController>();
@@ -66,10 +59,10 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = true;
         Debug.Log("오픈 완료!");
-    }
-    public void DesText()
-    {
-        complete.SetActive(false);
+        Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
+
+        //문구 띄우기
+        Instantiate(completeText);
     }
 
     //버튼 컨트롤
@@ -141,11 +134,6 @@ public class UIController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickShowBtn()
-    {
-        under_UI.SetActive(!under_UI.activeSelf);
-    }
-
     private void addFrame()
     {
         if (Input.GetMouseButtonDown(0) && cube.activeSelf)
@@ -167,5 +155,9 @@ public class UIController : MonoBehaviourPunCallbacks
             Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
             this.cube.SetActive(true);
         }
+    }
+    public void showText()
+    {
+        completeText.SetActive(true);
     }
 }

@@ -8,14 +8,12 @@ public class ColorChanger : MonoBehaviour
     public Material[] mat = new Material[2];
     private bool is_create;
     public GameObject framePrefab;
-    public GameObject frames;
     private Collider coll;
 
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<BoxCollider>();
-        frames = GameObject.Find("Frames");
         GetComponent<MeshRenderer>().material = mat[0];
         is_create = true;
     }
