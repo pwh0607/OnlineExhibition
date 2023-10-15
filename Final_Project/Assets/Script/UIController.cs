@@ -62,7 +62,7 @@ public class UIController : MonoBehaviourPunCallbacks
         Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
 
         //문구 띄우기
-        Instantiate(completeText);
+        completeText.SetActive(true);
     }
 
     //버튼 컨트롤
