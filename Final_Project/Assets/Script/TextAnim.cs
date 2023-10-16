@@ -7,14 +7,14 @@ using TMPro;
 public class TextAnim : MonoBehaviour
 {
     float time;
-    public float _fadeTime = 1.5f;
+    public float _fadeTime = 2f;
 
     void Update()
     {
         if (time < _fadeTime)
         {
-            Debug.Log(GetComponent<TextMesh>().text);
-            //GetComponent<TextMeshPro>().color = new Color(1, 1, 1, 1f - time / _fadeTime);          //4차식은 투명도!
+            Debug.Log(GetComponent<TextMeshProUGUI>().text);
+            GetComponent<TextMeshProUGUI>().color = new Color(0, 148, 255, 1f - time / _fadeTime);          //4차식은 투명도!
         }
         else
         {
@@ -26,7 +26,7 @@ public class TextAnim : MonoBehaviour
     public void OnEnable()
     {
         Debug.Log("텍스트 활성화!!");
-        GetComponent<TextMeshPro>().color = Color.white;
+        GetComponent<TextMeshProUGUI>().color = new Color(0, 148, 255);
     }
     public void OnDisable()
     {
