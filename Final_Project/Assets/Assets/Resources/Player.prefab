@@ -1650,6 +1650,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 2930796580500291027, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_text
+      value: Open !!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930796580500291027, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 2930796580500291027, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3252665745838584831, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
