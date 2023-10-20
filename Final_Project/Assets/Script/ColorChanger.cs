@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class ColorChanger : MonoBehaviour
+
+public class ColorChanger : MonoBehaviourPunCallbacks
 {
     public Material[] mat = new Material[2];
     private bool is_create;
     public GameObject framePrefab;
-    private Collider coll;
 
     // Start is called before the first frame update
     void Start()
     {
-        coll = GetComponent<BoxCollider>();
         GetComponent<MeshRenderer>().material = mat[0];
         is_create = true;
     }
