@@ -16,7 +16,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject m_UI;
     public GameObject masterPart;
     public GameObject completeText;
-    public Button openBtn;
+    public GameObject openBtn_text;
 
     //방 오브젝트 생성용
     public GameObject cube;            //ray 충돌용 cube
@@ -61,18 +61,12 @@ public class UIController : MonoBehaviourPunCallbacks
         Debug.Log("오픈 완료!");
         Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
 
-        ColorBlock btnColor = openBtn.colors;
-
         //버튼 상태 변경
         if (PhotonNetwork.CurrentRoom.IsOpen == true)
         {
-            //open 상태에서 클릭시.
-            //openBtn.GetComponent<Image>().color = new Color(166, 166, 166, 166);
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            btnColor.normalColor = new Color(166, 166, 166, 166);
-            openBtn.colors = btnColor;
-            openBtn.transform.GetChild(0).GetComponent<Text>().text = "Closed";
-            openBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(255, 255, 255, 170);
+
+            openBtn_text.GetComponent<Text>().text = "OPEN";
         }
         else
         {
@@ -81,10 +75,8 @@ public class UIController : MonoBehaviourPunCallbacks
 
             //문구 띄우기
             completeText.SetActive(true);
-            btnColor.normalColor = new Color(255, 255, 255, 255);
-            openBtn.colors = btnColor;
-            openBtn.transform.GetChild(0).GetComponent<Text>().text = "Open";
-            openBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(50, 50, 50, 255);
+
+            openBtn_text.GetComponent<Text>().text = "CLOSE";
         }
 
     }
