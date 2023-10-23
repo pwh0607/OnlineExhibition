@@ -94,25 +94,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    //버튼 컨트롤
-    public void LeaveRoom()
-    {
-        //방을 나오고 씬이동
-        PhotonNetwork.LeaveRoom();
-    }
-    public override void OnLeftRoom()
-    {
-        Debug.Log("방 퇴장!");
-        PhotonNetwork.LoadLevel("Lobby");
-        PhotonNetwork.JoinLobby();
-    }
-    private void addFrame()
-    {
-        if (Input.GetMouseButtonDown(0) && cube.activeSelf)
-        {
-            cube.GetComponent<ColorChanger>().AddFrame();
-        }
-    }
+
     //액자 자세히 보기.
     public void showFrame()
     {

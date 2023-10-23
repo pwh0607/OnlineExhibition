@@ -1631,6 +1631,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7488686417901344191}
     m_Modifications:
+    - target: {fileID: 32175754662183317, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 726090839793223180, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1734,7 +1738,11 @@ PrefabInstance:
     - target: {fileID: 6228476180151977107, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 7492995567627298358}
+      objectReference: {fileID: 3442058002514573588}
+    - target: {fileID: 6228476180151977107, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6228476180481542457, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1833,7 +1841,7 @@ PrefabInstance:
       objectReference: {fileID: 3442058002514573588}
     - target: {fileID: 6380036387682450769, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6597193609298761698, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_IsActive
