@@ -14,22 +14,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private bool m_isGrounded = true;
     private bool m_jumpOn = false;
 
+    public GameObject m_UI;
     public JoyStick sJoystick;
     public float m_moveSpeed = 2.0f;
     public float m_jumpForce = 5.0f;
 
     public GameObject camPos;
     GameObject roomManager;
-    private UIController ui_ctrl;
     private Camera cam;
 
-    //UI
-    public GameObject m_UI;
-    public GameObject masterPart;
-
-
     //방 오브젝트 생성용
-    public GameObject cube;            //ray 충돌용 cube
     private GameObject colorChanger;
 
     private int now_mode;
@@ -40,9 +34,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         roomManager = GameObject.Find("RoomManager");
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
-        ui_ctrl = GetComponent<UIController>();
         is_show = false;
-        cube.SetActive(false);
     }
 
     void Update()
@@ -53,17 +45,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (!PhotonNetwork.IsMasterClient)          
-        {
-            masterPart.SetActive(false);
-          //  showFrame();
-        }
-        else {                                     
-            SetImg();
-        }
-
         PlayerMove();
-        addFrame();
         SetCamPos();
         SetImg();
     }

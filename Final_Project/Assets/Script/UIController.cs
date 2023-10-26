@@ -14,9 +14,11 @@ public class UIController : MonoBehaviourPunCallbacks
 
     //UI
     public GameObject m_UI;
-    public GameObject masterPart;
     public GameObject completeText;
     public GameObject openBtn_text;
+
+    public GameObject master_menu;
+    public GameObject customer_menu;
 
     //방 오브젝트 생성용
     public GameObject cube;            //ray 충돌용 cube
@@ -39,6 +41,17 @@ public class UIController : MonoBehaviourPunCallbacks
         player_ctrl = GetComponent<PlayerController>();
         menu_sidebar.SetActive(false);
         revise_part.SetActive(false);
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            customer_menu.SetActive(true);
+            master_menu.SetActive(false);
+        }
+        else
+        {
+            master_menu.SetActive(true);
+            customer_menu.SetActive(false);
+        }
     }
 
     void Update()
@@ -47,10 +60,6 @@ public class UIController : MonoBehaviourPunCallbacks
         {
             m_UI.SetActive(false);
             return;
-        }
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            masterPart.SetActive(false);
         }
 
         showCube();
