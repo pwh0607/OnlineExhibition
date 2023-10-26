@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class RoomBtn : MonoBehaviour
+public class RoomBtn : MonoBehaviourPunCallbacks
 {
     public GameObject LobbyManager;
     string roomName;
@@ -20,7 +20,7 @@ public class RoomBtn : MonoBehaviour
         LobbyManager.GetComponent<LobbyManager>().OnClickRoom(roomName);
         Debug.Log("버튼 클릭!");
     }
-    /*
+    
     public override void OnJoinedRoom()
     {
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " " + roomName + "입장!!");
@@ -29,5 +29,4 @@ public class RoomBtn : MonoBehaviour
         PhotonNetwork.LoadLevel("RoomScene");
         base.OnJoinedRoom();
     }
-    */
 }
