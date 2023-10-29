@@ -40,6 +40,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
     }
+    public override void OnLeftRoom()
+    {
+        Debug.Log("πÊ ≈¿Â!");
+        PhotonNetwork.JoinLobby();
+        PhotonNetwork.LoadLevel("LobbyScene");
+    }
 
     private void Start()
     {
@@ -49,18 +55,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
         setProperties();
         now_mode = 0;
-    }
-    public void LeaveRoom() {
-        //πÊ¿ª ≥™ø¿∞Ì æ¿¿Ãµø
-        PhotonNetwork.LeaveRoom();
-    }
-
-    public override void OnLeftRoom()
-    {
-        Debug.Log("πÊ ≈¿Â!");
-        PhotonNetwork.LoadLevel("Lobby");
-        PhotonNetwork.JoinLobby();
-        //base.OnLeftRoom();
     }
 
     public void UpdateMode(int mode)

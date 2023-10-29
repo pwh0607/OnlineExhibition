@@ -97,13 +97,6 @@ public class UIController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
-    public override void OnLeftRoom()
-    {
-        Debug.Log("Ήζ Επΐε!");
-        PhotonNetwork.LoadLevel("LobbyScene");
-        PhotonNetwork.JoinLobby();
-    }
-
     public void OnClickMenuBtn()
     {
         if (menu_clicked)
