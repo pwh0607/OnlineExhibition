@@ -8,8 +8,7 @@ using Photon.Realtime;
 public class UIController : MonoBehaviourPunCallbacks
 {
     private PlayerController player_ctrl;
-    
-    public GameObject roomManager;
+
     private Camera cam;
 
     //UI
@@ -25,33 +24,36 @@ public class UIController : MonoBehaviourPunCallbacks
 
     private bool menu_clicked = false;
 
-    public GameObject menu_sidebar;
+
+    public GameObject master_sidebar;
+    public GameObject customer_sidebar;
+
+    private GameObject sidebar;
+
     public GameObject revise_part;
     public GameObject normal_part;
-
-    private int now_mode;
-    private bool is_show;       //frame을 보고 있는 상태 인지.
-
+   
     void Start()
     {
-        roomManager = GameObject.Find("RoomManager");
-        cam = GameObject.Find("mainCam").GetComponent<Camera>();
-        is_show = false;
-        cube.SetActive(false);
-        player_ctrl = GetComponent<PlayerController>();
-        menu_sidebar.SetActive(false);
-        revise_part.SetActive(false);
-
         if (!PhotonNetwork.IsMasterClient)
         {
+            sidebar = customer_sidebar;
             customer_menu.SetActive(true);
             master_menu.SetActive(false);
         }
         else
         {
+            sidebar = master_sidebar;
             master_menu.SetActive(true);
             customer_menu.SetActive(false);
         }
+        
+        sidebar = master_sidebar;
+        cam = GameObject.Find("mainCam").GetComponent<Camera>();
+        cube.SetActive(false);
+        player_ctrl = GetComponent<PlayerController>();
+        sidebar.SetActive(false);
+        revise_part.SetActive(false);
     }
 
     void Update()
@@ -67,27 +69,18 @@ public class UIController : MonoBehaviourPunCallbacks
     }
     public void OnClickOpen()
     {
-        Debug.Log("오픈 완료!");
-        Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
-
+        RoomManager.instance.setOpenOption();
         //버튼 상태 변경
-        if (PhotonNetwork.CurrentRoom.IsOpen == true)
+        if (PhotonNetwork.CurrentRoom.IsOpen)
         {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-
             openBtn_text.GetComponent<Text>().text = "OPEN";
         }
         else
         {
-            //closed 상태
-            PhotonNetwork.CurrentRoom.IsOpen = true;
-
             //문구 띄우기
             completeText.SetActive(true);
-
             openBtn_text.GetComponent<Text>().text = "CLOSE";
         }
-
     }
 
     //버튼 컨트롤
@@ -97,26 +90,30 @@ public class UIController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("LobbyScene");
+    }
+
     public void OnClickMenuBtn()
     {
         if (menu_clicked)
         {
             //이미 메뉴 창이 열린상태라면 닫기
             menu_clicked = false;
-            menu_sidebar.SetActive(false);
+            sidebar.SetActive(false);
         }
         else
         {
             //메뉴창이 닫힌 상태라면 열기
             menu_clicked = true;
-            menu_sidebar.SetActive(true);
+            sidebar.SetActive(true);
         }
     }
 
     public void OnClickSetRevise()
     {
         //방 수정 모드로 변경.
-        Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
         revise_part.SetActive(true);
         normal_part.SetActive(false);
     }
@@ -124,20 +121,20 @@ public class UIController : MonoBehaviourPunCallbacks
     public void OnClickShowCube()
     {
         //큐브 생성.
-        roomManager.GetComponent<RoomManager>().UpdateMode(1);
+        RoomManager.instance.UpdateMode(1);
     }
 
     public void OnClickSetNormal()
     {
         //방 수정 모드로 변경.
-        Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
         normal_part.SetActive(true);
         revise_part.SetActive(false);
-        roomManager.GetComponent<RoomManager>().UpdateMode(0);
+        RoomManager.instance.UpdateMode(0);
     }
+
     private void showCube()
     {
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 1)       //액자 생성 모드인 경우.
+        if (RoomManager.instance.GetMode() == 1)       //액자 생성 모드인 경우.
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -168,9 +165,8 @@ public class UIController : MonoBehaviourPunCallbacks
     public void OnPointerExit()
     {
         //포인터가 밖으로 나왔을때 모드에 맞도록...
-        if (roomManager.GetComponent<RoomManager>().GetMode() == 1) 
+        if (RoomManager.instance.GetMode() == 1) 
         {
-            Debug.Log("모드 : " + roomManager.GetComponent<RoomManager>().GetMode());
             this.cube.SetActive(true);
         }
     }

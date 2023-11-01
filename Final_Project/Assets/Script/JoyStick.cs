@@ -18,12 +18,10 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
     }
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Joystick >>> OnDrag()");
         Vector2 pos;
         //배경 영역에 터치가 발생할 때
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(imgBG.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
         {
-            //Debug.Log(imgBG.rectTransform.sizeDelta);
             //터치된 로컬 좌표값을 pos에 저장
             //배경 이미지의 size로 나누어 pos.x: -1~1, pos.y: -1~1 으로 변환
             pos.x = (pos.x / imgBG.rectTransform.sizeDelta.x);

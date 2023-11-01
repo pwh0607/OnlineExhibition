@@ -634,7 +634,7 @@ Light:
   m_GameObject: {fileID: 692882095}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 1
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -895,7 +895,7 @@ Light:
   m_GameObject: {fileID: 1492796055}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 1
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
@@ -1155,7 +1155,7 @@ GameObject:
   - component: {fileID: 2002036575}
   - component: {fileID: 2002036576}
   - component: {fileID: 2002036578}
-  - component: {fileID: 2002036577}
+  - component: {fileID: 2002036579}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -1192,22 +1192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7492452204117333189, guid: 8d54d572fc004fa48acd8300a20cb131, type: 3}
   playerPos: {fileID: 429612027}
---- !u!114 &2002036577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002036574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2002036578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,10 +1211,26 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2002036577}
-  sceneViewId: 2
+  - {fileID: 2002036579}
+  sceneViewId: 999
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &2002036579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002036574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2017485069
 GameObject:
   m_ObjectHideFlags: 0

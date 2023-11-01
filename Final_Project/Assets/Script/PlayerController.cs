@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPun
 {
     //움직임
     private Animator m_animator;
@@ -19,21 +19,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public float m_jumpForce = 5.0f;
 
     public GameObject camPos;
-    GameObject roomManager;
     private Camera cam;
 
-    //방 오브젝트 생성용
-    private GameObject colorChanger;
-
+   
     private int now_mode;
-    private bool is_show;       //frame을 보고 있는 상태 인지.
-
+   
     void Start()
     {
-        roomManager = GameObject.Find("RoomManager");
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
-        is_show = false;
     }
 
     void Update()
@@ -75,7 +69,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-
     //액자 자세히 보기.
     public void showFrame()
     {
@@ -87,9 +80,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 if (hit.collider.gameObject.tag == "Frame")   //ray가 액자에 맞닿은 순간.
                 {
-                    is_show = true;
                     now_mode = 2;
-                    if (roomManager.GetComponent<RoomManager>().GetMode() == 0)      //일반 모드
+                    if (RoomManager.instance.GetMode() == 0)      //일반 모드
                     {
                         //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
                         Vector3 hitObj = hit.collider.gameObject.transform.position;
@@ -104,16 +96,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //액자 이미지 세팅
     public void SetImg()
     {
-        if (Input.GetMouseButtonDown(0) && roomManager.GetComponent<RoomManager>().GetMode() == 0)      //기본 모드 이고...
+        if (Input.GetMouseButtonDown(0) && RoomManager.instance.GetMode() == 0)      //기본 모드 이고...
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("액자 클릭!!");
                 if (hit.collider.tag == "Frame")
                 {
-                    Debug.Log("액자 명 : " + hit.collider.gameObject.name);
                     hit.collider.gameObject.GetComponent<FileBrowser>().OnClickImageLoad();
                 }
             }

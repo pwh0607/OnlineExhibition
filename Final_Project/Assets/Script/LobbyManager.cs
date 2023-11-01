@@ -49,12 +49,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //방 옵션 생성
         RoomOptions options = new RoomOptions();
-
-        options.IsOpen = false;
+        options.IsOpen = true;
 
         //방 생성하기.
         PhotonNetwork.CreateRoom(makeRoomName, options, null);
     }
+
     //방 버튼 클릭시!
     public void OnClickRoom(string roomName)
     {
@@ -65,7 +65,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log(makeRoomName + "생성 완료!");
-        base.OnCreatedRoom();
     }
 
     //로비
@@ -73,7 +72,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("로비 접근!");
         cachedRoomList.Clear();
-        //base.OnJoinedLobby();
     }
     public override void OnLeftLobby()
     {
@@ -84,11 +82,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //방입장
     public override void OnJoinedRoom()
     {
-        Debug.Log(roomName.GetComponent<Text>().text + "방입장 성공!!");
-
         //해당 방씬으로 이동.
         PhotonNetwork.LoadLevel("RoomScene");
-        //base.OnJoinedRoom();
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
     {

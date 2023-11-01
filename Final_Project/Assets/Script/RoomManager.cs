@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
-using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class RoomManager : MonoBehaviourPunCallbacks
+public class RoomManager : MonoBehaviourPun
 {
-    public GameObject playerPrefab;
-    public GameObject playerPos;
-
-    private int now_mode;
-
     public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
     {
         get
@@ -29,31 +20,30 @@ public class RoomManager : MonoBehaviourPunCallbacks
             return m_instance;
         }
     }
-    private static RoomManager m_instance;
+
+    public static RoomManager m_instance;
+
+    public GameObject playerPrefab;
+    public GameObject playerPos;
+
+    private int now_mode;
+      //싱글톤 변수
 
     private void Awake()
     {
         // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면
         if (instance != this)
         {
-            // 자신을 파괴
             Destroy(gameObject);
         }
-    }
-    public override void OnLeftRoom()
-    {
-        Debug.Log("방 퇴장!");
-        PhotonNetwork.JoinLobby();
-        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     private void Start()
     {
-        Vector3 randomSpawnPos = playerPos.transform.position;
-        // 네트워크상의 모든 클라이언트에서 생성 실행  
-        // 해당 게임 오브젝트의 주도권은 생성 메서드를 직접 실행한 클라이언트에 있음
-        PhotonNetwork.Instantiate(playerPrefab.name, randomSpawnPos, Quaternion.identity);
-        setProperties();
+        Debug.Log("플레이어 생성 !");
+        Vector3 SpawnPos = playerPos.transform.position;
+        PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
+        //setProperties();
         now_mode = 0;
     }
 
@@ -67,17 +57,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         return now_mode;
     }
 
-    //플레이어 입장 콜백
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("플레이어 입장!");
-    }
-
     private void setProperties()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomState", "Waiting" } });
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable() { { "RoomMaster", PhotonNetwork.LocalPlayer.NickName } });
         }
+    }
+
+    public void setOpenOption()
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = !PhotonNetwork.CurrentRoom.IsOpen;
     }
 }

@@ -13,7 +13,6 @@ public class TextAnim : MonoBehaviour
     {
         if (time < _fadeTime)
         {
-            Debug.Log(GetComponent<TextMeshProUGUI>().text);
             GetComponent<TextMeshProUGUI>().color = new Color(0, 148, 255, 1f - time / _fadeTime);          //4차식은 투명도!
         }
         else

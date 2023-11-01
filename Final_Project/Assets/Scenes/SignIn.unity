@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b7e689079d364454dadbd3dfe669b8aa, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 9e7103e993bdfc747ad58b6a9109aa47, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -598,8 +598,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 454955664}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 454955665}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
         m_MethodName: CheckName
         m_Mode: 1
         m_Arguments:
@@ -657,7 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 454955663}
-  - component: {fileID: 454955664}
+  - component: {fileID: 454955665}
   m_Layer: 0
   m_Name: LogInManager
   m_TagString: Untagged
@@ -680,7 +680,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &454955664
+--- !u!114 &454955665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 454955662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e1d2c268e3264349a0998a94ebc2fc0, type: 3}
+  m_Script: {fileID: 11500000, guid: e7f48e596c40c1f4eb1f0210543aeeb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nickNameField: {fileID: 2087555587}

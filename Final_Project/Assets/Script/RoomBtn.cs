@@ -27,6 +27,5 @@ public class RoomBtn : MonoBehaviourPunCallbacks
 
         //해당 방씬으로 이동.
         PhotonNetwork.LoadLevel("RoomScene");
-        base.OnJoinedRoom();
     }
 }
