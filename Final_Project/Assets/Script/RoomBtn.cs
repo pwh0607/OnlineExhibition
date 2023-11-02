@@ -20,12 +20,4 @@ public class RoomBtn : MonoBehaviourPunCallbacks
         LobbyManager.GetComponent<LobbyManager>().OnClickRoom(roomName);
         Debug.Log("버튼 클릭!");
     }
-    
-    public override void OnJoinedRoom()
-    {
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " " + roomName + "입장!!");
-
-        //해당 방씬으로 이동.
-        PhotonNetwork.LoadLevel("RoomScene");
-    }
 }

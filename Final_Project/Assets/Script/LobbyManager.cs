@@ -32,7 +32,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         makeRoomName = roomName.GetComponent<Text>().text;
         nickName.GetComponent<Text>().text = PhotonNetwork.NickName;
-     
+
         /*if(cachedRoomList.Count < 1)
         {
             emptyRoom.SetActive(true);
@@ -101,7 +101,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < roomList.Count; i++)
         {
             //방의 상태가 Open인 경우만...
-           // if (roomList[i].IsOpen)
+            // if (roomList[i].IsOpen)
             {
                 Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
                 instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
@@ -120,7 +120,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         for (int i = 0; i < roomList.Count; i++)
         {
-            if(roomList[i].RemovedFromList == false)
+            if (roomList[i].RemovedFromList == false)
             {
                 if (cachedRoomList.ContainsKey(roomList[i].Name) == false)      //방이 처음 생성된 경우.
                 {

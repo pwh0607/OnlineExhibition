@@ -73,13 +73,13 @@ public class UIController : MonoBehaviourPunCallbacks
         //버튼 상태 변경
         if (PhotonNetwork.CurrentRoom.IsOpen)
         {
-            openBtn_text.GetComponent<Text>().text = "OPEN";
+            openBtn_text.GetComponent<Text>().text = "CLOSE";
         }
         else
         {
             //문구 띄우기
             completeText.SetActive(true);
-            openBtn_text.GetComponent<Text>().text = "CLOSE";
+            openBtn_text.GetComponent<Text>().text = "OPEN";
         }
     }
 

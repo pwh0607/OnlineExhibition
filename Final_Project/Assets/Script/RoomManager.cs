@@ -3,16 +3,15 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class RoomManager : MonoBehaviourPun
+public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
+    public static RoomManager instance // 외부에서 싱글톤 오브젝트를 사용할 땨 프로퍼티
     {
         get
         {
             // 만약 싱글톤 변수에 아직 오브젝트가 할당되지 않았다면
             if (m_instance == null)
             {
-                // 씬에서 GameManager 오브젝트를 찾아 할당
                 m_instance = FindObjectOfType<RoomManager>();
             }
 
@@ -21,7 +20,7 @@ public class RoomManager : MonoBehaviourPun
         }
     }
 
-    public static RoomManager m_instance;
+    private static RoomManager m_instance;
 
     public GameObject playerPrefab;
     public GameObject playerPos;
