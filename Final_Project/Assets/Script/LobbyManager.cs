@@ -75,8 +75,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftLobby()
     {
-        Debug.Log("로비 퇴장!");
-        base.OnLeftLobby();
+
     }
 
     //방입장

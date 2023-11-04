@@ -23,8 +23,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void Connect()
     {
         PhotonNetwork.ConnectUsingSettings();
-        startBtn.interactable = false;
         PhotonNetwork.LocalPlayer.NickName = nickNameField.text;
+        startBtn.interactable = false;
     }
     public override void OnConnectedToMaster()
     {

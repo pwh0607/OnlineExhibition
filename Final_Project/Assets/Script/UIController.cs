@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 using Photon.Realtime;
 
 public class UIController : MonoBehaviourPunCallbacks
 {
-    private PlayerController player_ctrl;
-
     private Camera cam;
 
     //UI
@@ -51,7 +50,6 @@ public class UIController : MonoBehaviourPunCallbacks
         sidebar = master_sidebar;
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         cube.SetActive(false);
-        player_ctrl = GetComponent<PlayerController>();
         sidebar.SetActive(false);
         revise_part.SetActive(false);
     }
@@ -82,17 +80,16 @@ public class UIController : MonoBehaviourPunCallbacks
             openBtn_text.GetComponent<Text>().text = "OPEN";
         }
     }
+    public override void OnLeftRoom()
+    {
+        Debug.Log("방 나가기!");
+    }
 
     //버튼 컨트롤
     public void LeaveRoom()
     {
         //방을 나오고 씬이동
         PhotonNetwork.LeaveRoom();
-    }
-
-    public override void OnLeftRoom()
-    {
-        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public void OnClickMenuBtn()
@@ -156,6 +153,7 @@ public class UIController : MonoBehaviourPunCallbacks
             cube.GetComponent<ColorChanger>().AddFrame();
         }
     }
+
     //Frame 버튼 관련
     public void OnPointerEnter()
     {

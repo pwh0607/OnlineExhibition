@@ -68,4 +68,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.CurrentRoom.IsOpen = !PhotonNetwork.CurrentRoom.IsOpen;
     }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("방 나가기");
+        PhotonNetwork.LoadLevel("LobbyScene");
+    }
 }
