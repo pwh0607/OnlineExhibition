@@ -32,15 +32,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         makeRoomName = roomName.GetComponent<Text>().text;
         nickName.GetComponent<Text>().text = PhotonNetwork.NickName;
-
-        /*if(cachedRoomList.Count < 1)
-        {
-            emptyRoom.SetActive(true);
-        }
-        else
-        {
-            emptyRoom.SetActive(false);
-        }*/
     }
 
     public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby();
@@ -49,7 +40,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         //规 可记 积己
         RoomOptions options = new RoomOptions();
-        options.IsOpen = true;
+        options.IsOpen = false;
 
         //规 积己窍扁.
         PhotonNetwork.CreateRoom(makeRoomName, options, null);

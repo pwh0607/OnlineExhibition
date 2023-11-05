@@ -68,8 +68,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public void OnClickOpen()
     {
         RoomManager.instance.setOpenOption();
+        Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
         //버튼 상태 변경
-        if (PhotonNetwork.CurrentRoom.IsOpen)
+        if (PhotonNetwork.CurrentRoom.IsOpen)           //공개 상태라면.
         {
             openBtn_text.GetComponent<Text>().text = "CLOSE";
         }
@@ -79,10 +80,6 @@ public class UIController : MonoBehaviourPunCallbacks
             completeText.SetActive(true);
             openBtn_text.GetComponent<Text>().text = "OPEN";
         }
-    }
-    public override void OnLeftRoom()
-    {
-        Debug.Log("방 나가기!");
     }
 
     //버튼 컨트롤
