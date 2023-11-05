@@ -19,6 +19,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         warnMsg.SetActive(false);
         ConnectMsg.SetActive(false);
     }
+    private void Update()
+    {
+        PopUp();
+    }
     //서버 연결
     public void Connect()
     {
@@ -54,7 +58,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void func1()
+    public void PopUp()
     {
         if (warnMsg.active)
         {
