@@ -29,7 +29,7 @@ public class FileBrowser : MonoBehaviourPun
         PhotonView pv = gameObject.GetComponent<PhotonView>();
         //pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
-  //  [PunRPC]
+    [PunRPC]
     public void OnClickImageLoad()
     {
         NativeGallery.GetImageFromGallery((file)=> {
