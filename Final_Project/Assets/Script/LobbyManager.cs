@@ -64,10 +64,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("로비 접근!");
         cachedRoomList.Clear();
     }
-    public override void OnLeftLobby()
-    {
-
-    }
 
     //방입장
     public override void OnJoinedRoom()
@@ -105,7 +101,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 btnPos.pivot = dir;
 
                 //설정후 RectTransform 변경.
+                btnPos.localPosition = new Vector3(0, 0, 0);
                 btnPos.anchoredPosition = new Vector2(0, -40);
+                btnPos.localScale = new Vector3(1, 1, 1);
             }
         }
         for (int i = 0; i < roomList.Count; i++)
