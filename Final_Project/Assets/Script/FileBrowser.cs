@@ -13,22 +13,20 @@ public class FileBrowser : MonoBehaviourPun
 
     [SerializeField]
     RawImage rawImage;
-    public GameObject text;
     public GameObject cube;
-    public bool isImg;
 
     private void Start()
     {
         rawImage = cube.GetComponent<RawImage>();
-        isImg = false;
     }
 
     [PunRPC]
     private void OnMouseDown()
     {
         PhotonView pv = gameObject.GetComponent<PhotonView>();
-        //pv.RPC("OnClickImageLoad", RpcTarget.All);
+        pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
+
     [PunRPC]
     public void OnClickImageLoad()
     {
@@ -53,16 +51,8 @@ public class FileBrowser : MonoBehaviourPun
 
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(tempImage);
-            cube.GetComponent<Renderer>().material.mainTexture = texture;
+            cube.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
             yield return null;
         }
-        text.SetActive(false);
-        isImg = true;
-    }
-
-    //[RequireComponent(typeof(PhotonView))]
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        stream.SendNext(rawImage);
     }
 }
