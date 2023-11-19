@@ -12,9 +12,6 @@ using Firebase.Database;
 
 public class FileBrowser : MonoBehaviourPun
 {
-    string filePath;
-    private Texture2D texture;
-
     private FirebaseStorage storage;
     private StorageReference storageRef;
 
@@ -24,7 +21,6 @@ public class FileBrowser : MonoBehaviourPun
 
     private void Start()
     {
-        //  rawImage = cube.GetComponent<RawImage>();
         storage = FirebaseStorage.DefaultInstance;
         storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-9dbef.appspot.com");
     }
@@ -33,7 +29,7 @@ public class FileBrowser : MonoBehaviourPun
     private void OnMouseDown()
     {
         PhotonView pv = gameObject.GetComponent<PhotonView>();
-        pv.RPC("OnClickImageLoad", RpcTarget.All);
+        //pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
 
     [PunRPC]
@@ -54,22 +50,15 @@ public class FileBrowser : MonoBehaviourPun
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
             string saveImagePath = Application.persistentDataPath + "/Image";
+            string imageFullName = imageName + ".jpg";
 
-            File.WriteAllBytes(saveImagePath + imageName + ".jpg", imageData);
+            File.WriteAllBytes(saveImagePath + imageFullName, imageData);
 
-            var tempImage = File.ReadAllBytes(imagePath);
-
-            //이미지 매핑용파트
-            /*
-            Texture2D texture = new Texture2D(0, 0);
-            texture.LoadImage(tempImage);
-            cube.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
-            */
             //metadata세팅
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
-            StorageReference uploadRef = storageRef.Child("Room1/newFile.jpg");
+            StorageReference uploadRef = storageRef.Child("Room1/" + imageFullName);
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
                 if (task.IsFaulted || task.IsCanceled)
@@ -78,6 +67,7 @@ public class FileBrowser : MonoBehaviourPun
                 }
                 else
                 {
+                    Debug.Log(imageFullName);
                     Debug.Log("성공!!");
                 }
             });
