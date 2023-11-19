@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviourPun
             {
                 if (hit.collider.tag == "Frame")
                 {
-                    hit.collider.gameObject.GetComponent<FileBrowser>().OnClickImageLoad();
+                    hit.collider.gameObject.GetComponent<FBImgUploader>().OnClickImageLoad();
                 }
             }
         }   
