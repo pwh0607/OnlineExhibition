@@ -38,8 +38,11 @@ public class ColorChanger : MonoBehaviourPunCallbacks
     {
         if (is_create)      //생성 가능 상태인 경우.
         {
+            int cnt = RoomManager.instance.get_FrameCnt();
+            RoomManager.instance.add_Frame();
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
             GameObject instance = PhotonNetwork.InstantiateRoomObject(framePrefab.name, pos, transform.rotation);
+            instance.name = "frame" + cnt;
         }
     }
 }
