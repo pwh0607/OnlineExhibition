@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 191207794271136195}
   - component: {fileID: 191207794271136194}
   - component: {fileID: 191207794271136193}
-  - component: {fileID: 191207794271136197}
   - component: {fileID: 3367535201863541093}
   - component: {fileID: 7060948543722713283}
   - component: {fileID: 3488364595349520563}
@@ -31,7 +30,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191207794271136206}
   m_LocalRotation: {x: -0, y: 0.0035210142, z: -0, w: 0.9999938}
-  m_LocalPosition: {x: 0, y: 0, z: 0.00004339218}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 3, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42,7 +41,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0.403, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.012323569, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &191207794271136195
@@ -103,25 +102,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191207794271136206}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5299999, y: 0.08130809, z: 0.5299999}
-  m_Center: {x: 0, y: -0.006312723, z: 0.25000003}
---- !u!114 &191207794271136197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191207794271136206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37c35f188046cd343ad8f6386216758c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImage: {fileID: 0}
-  cube: {fileID: 3796521990061272727}
+  m_Size: {x: 0.5, y: 0.05, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0.24999997}
 --- !u!54 &3367535201863541093
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1678676c86417a49b4dbb80588f42a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cube: {fileID: 3796521990061272727}
 --- !u!114 &3488364595349520563
 MonoBehaviour:
   m_ObjectHideFlags: 0

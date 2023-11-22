@@ -5,7 +5,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-
     public static RoomManager instance // 외부에서 싱글톤 오브젝트를 사용할 땨 프로퍼티
     {
         get
@@ -44,11 +43,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("플레이어 생성 !");
         Vector3 SpawnPos = playerPos.transform.position;
         PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
-        //setProperties();
         now_mode = 0;
         frame_cnt = 0;
     }
-
+    //1 : 액자 수정, 3 : 액자 삭제
     public void UpdateMode(int mode)
     {
         this.now_mode = mode;
