@@ -18,11 +18,13 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject master_menu;
     public GameObject customer_menu;
 
+    public GameObject ReviseMV;
+    public GameObject DeleteMV;
+
     //방 오브젝트 생성용
-    public GameObject cube;            //ray 충돌용 cube
+    public GameObject cube;            //액자 생성용 큐브
 
     private bool menu_clicked = false;
-
 
     public GameObject master_sidebar;
     public GameObject customer_sidebar;
@@ -52,6 +54,8 @@ public class UIController : MonoBehaviourPunCallbacks
         cube.SetActive(false);
         sidebar.SetActive(false);
         revise_part.SetActive(false);
+        ReviseMV.SetActive(false);
+        DeleteMV.SetActive(false);
     }
 
     void Update()
@@ -64,7 +68,9 @@ public class UIController : MonoBehaviourPunCallbacks
 
         showCube();
         addFrame();
+        deleteFrame();
     }
+
     public void OnClickOpen()
     {
         RoomManager.instance.setOpenOption();
@@ -116,6 +122,7 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         //큐브 생성.
         RoomManager.instance.UpdateMode(1);
+        ReviseMV.SetActive(true);
     }
 
     public void OnClickSetNormal()
@@ -123,6 +130,9 @@ public class UIController : MonoBehaviourPunCallbacks
         //방 수정 모드로 변경.
         normal_part.SetActive(true);
         revise_part.SetActive(false);
+        //모드뷰어 비활성화.
+        ReviseMV.SetActive(false);
+        DeleteMV.SetActive(false);
         RoomManager.instance.UpdateMode(0);
     }
 
@@ -168,5 +178,49 @@ public class UIController : MonoBehaviourPunCallbacks
     public void showText()
     {
         completeText.SetActive(true);
+    }
+
+    //Delete 버튼 클릭시.
+    public void setDeleteMode()
+    {
+        if(RoomManager.instance.GetMode() == 3)
+        {
+            RoomManager.instance.UpdateMode(0);
+            DeleteMV.SetActive(false);
+            Debug.Log("일반 모드로 변경.");
+        }
+        else
+        {
+            RoomManager.instance.UpdateMode(3);
+            DeleteMV.SetActive(true);
+            Debug.Log("삭제 모드로 변경.");
+        }
+    }
+    
+    //mode = 3 이면 삭제 모드.
+    public void deleteFrame()
+    {
+        if (RoomManager.instance.GetMode() == 3 && Input.GetMouseButtonDown(0))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject.tag == "Frame")
+                    Destroy(hit.collider.gameObject);
+            }
+        }
+    }
+
+    public void show_modeView()
+    {
+        if(RoomManager.instance.GetMode() == 1)
+        {
+
+        }
+        else if (RoomManager.instance.GetMode() == 1)
+        {
+
+        }
     }
 }
