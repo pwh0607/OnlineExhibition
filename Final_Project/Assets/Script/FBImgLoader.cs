@@ -40,19 +40,17 @@ public class FBImgLoader : MonoBehaviour
     {
         //변수값 초기화
         roomName = "Room1";           //나중에 scene이름으로 변경.
-
         //데이터베이스 참조
         FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-9dbef-default-rtdb.firebaseio.com/");
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference.Child("rooms").Child(roomName).Child(gameObject.name);
+        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         //스토리지 참조
         storage = FirebaseStorage.DefaultInstance;
         storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-9dbef.appspot.com").Child(roomName);
 
-        //시작과 동시에 DB를 읽어서 오브젝트에 사진 매핑.
         ReadDB();
     }
-    
+
     //스토리지에서 이미지 가져오기
     public void GetImage(string photoPath) //파이어베이스 업로드
     {
@@ -72,10 +70,11 @@ public class FBImgLoader : MonoBehaviour
     //데이터베이스에서 사진path 가져오기
     public void ReadDB()
     {
+        string objName = this.gameObject.GetComponent<FrameController>().getObjName();
+        Debug.Log("DB 읽기!! : " + objName);
+
         // 특정 데이터셋의 DB 참조 얻기
-
-
-        databaseRef.GetValueAsync().ContinueWith(
+        databaseRef.Child("rooms").Child(roomName).Child(objName).GetValueAsync().ContinueWith(
              task =>
              {
                  if (task.IsFaulted)

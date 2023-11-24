@@ -42,7 +42,7 @@ public class ColorChanger : MonoBehaviourPunCallbacks
             RoomManager.instance.add_Frame();
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
             GameObject instance = PhotonNetwork.InstantiateRoomObject(framePrefab.name, pos, transform.rotation);
-            instance.name = "frame" + cnt;
+            instance.name = "Frame" + cnt;
         }
     }
 }

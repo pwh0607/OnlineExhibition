@@ -46,7 +46,7 @@ public class FBImgUploader : MonoBehaviour
     //데이터 베이스 업로드
     public void DBUpload(string roomName, string imageFullName)
     {
-        string objName = gameObject.name.Trim();
+        string objName = this.gameObject.GetComponent<FrameController>().getObjName();
         string photoPath = imageFullName.Trim();
 
         var data = new Photo(photoPath);
