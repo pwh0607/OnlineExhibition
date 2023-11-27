@@ -113,4 +113,4 @@ MonoBehaviour:
   mat:
   - {fileID: 2100000, guid: 762ebcfaf046f6941913683c4872205e, type: 2}
   - {fileID: 2100000, guid: 2ba848f8095397c4f805b95dded842d2, type: 2}
-  framePrefab: {fileID: 9092126897552245080, guid: facef834d3162dc45bb31fa88d283e6c, type: 3}
+  framePrefab: {fileID: 5948215805604609458, guid: 8163c72030067ed4eb21561441e1ca57, type: 3}
