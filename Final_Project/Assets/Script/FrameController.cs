@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class FrameController : MonoBehaviour
 {
     private string objName;
-
-    private void OnEnable()
+    public GameObject tmp;
+    private void Awake()
     {
-        objName = "Frame" + RoomManager.instance.get_FrameCnt();
         RoomManager.instance.add_Frame();
+        objName = "Frame" + RoomManager.instance.get_FrameCnt();
+        gameObject.GetComponent<FBImgLoader>().ReadDB();
+
+    }
+    public void setsibal(string name)
+    {
+        tmp.GetComponent<TextMeshPro>().text = name;
     }
     public string getObjName()
     {

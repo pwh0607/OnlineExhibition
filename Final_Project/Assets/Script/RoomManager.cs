@@ -27,6 +27,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private int frame_cnt;
     private int now_mode;
+
+    private bool loadChecker;
       //싱글톤 변수
 
     private void Awake()
@@ -45,12 +47,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
         now_mode = 0;
         frame_cnt = 0;
+        loadChecker = false;
     }
     //1 : 액자 수정, 3 : 액자 삭제
     public void UpdateMode(int mode)
     {
         this.now_mode = mode;
-        Debug.Log("모드 변경 : " + now_mode);
     }
     public int GetMode()
     {
@@ -82,5 +84,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public int get_FrameCnt()
     {
         return frame_cnt;
+    }
+
+    public void loadCheck()
+    {
+        loadChecker = true;
+    }
+
+    public bool checking()
+    {
+        return loadChecker;
     }
 }

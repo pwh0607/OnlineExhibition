@@ -8,8 +8,10 @@ using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Firebase.Database;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class FBImgLoader : MonoBehaviour
+public class FBImgLoader : MonoBehaviourPunCallbacks
 {
     //FB 참조
     private FirebaseStorage storage;
@@ -36,32 +38,27 @@ public class FBImgLoader : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Awake()
     {
         //변수값 초기화
         roomName = "Room1";           //나중에 scene이름으로 변경.
         //데이터베이스 참조
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-9dbef-default-rtdb.firebaseio.com/");
+        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-9dbef-default-rtdb.firebaseio.com");
         databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
 
         //스토리지 참조
         storage = FirebaseStorage.DefaultInstance;
         storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-9dbef.appspot.com").Child(roomName);
-
-        ReadDB();
     }
 
     //스토리지에서 이미지 가져오기
-    public void GetImage(string photoPath) //파이어베이스 업로드
+    private void GetImage(string photoPath) //파이어베이스 업로드
     {
         StorageReference image = storageRef.Child(photoPath);         //매개변수는 사진명
-        Debug.Log(image.Path + " 여기까진 성공!");
-
         image.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
-                Debug.Log("성공!!");
                 StartCoroutine(imageLoad(Convert.ToString(task.Result)));
             }
         });
@@ -71,8 +68,8 @@ public class FBImgLoader : MonoBehaviour
     public void ReadDB()
     {
         string objName = this.gameObject.GetComponent<FrameController>().getObjName();
-        Debug.Log("DB 읽기!! : " + objName);
-
+        gameObject.GetComponent<FrameController>().setsibal(objName);
+        RoomManager.instance.loadCheck();
         // 특정 데이터셋의 DB 참조 얻기
         databaseRef.Child("rooms").Child(roomName).Child(objName).GetValueAsync().ContinueWith(
              task =>
@@ -88,7 +85,6 @@ public class FBImgLoader : MonoBehaviour
 
                     // JSON 자체가 딕셔너리 기반   key는 오브젝트 이름(frame(n)) 값이 사진path;
                     IDictionary dirInfo = (IDictionary)data.Value;
-                    Debug.Log("photo 1 : " + dirInfo["photoPath"]);
                     string photoPath = Convert.ToString(dirInfo["photoPath"]);
                     GetImage(photoPath);
                  }

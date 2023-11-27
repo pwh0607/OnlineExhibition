@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using TMPro;
 
 public class UIController : MonoBehaviourPunCallbacks
 {
@@ -20,6 +21,9 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public GameObject ReviseMV;
     public GameObject DeleteMV;
+
+    //test용 오브젝트 추후 삭제
+    public GameObject ImgLoading;
 
     //방 오브젝트 생성용
     public GameObject cube;            //액자 생성용 큐브
@@ -56,6 +60,7 @@ public class UIController : MonoBehaviourPunCallbacks
         revise_part.SetActive(false);
         ReviseMV.SetActive(false);
         DeleteMV.SetActive(false);
+        ImgLoading.SetActive(false);
     }
 
     void Update()
@@ -69,6 +74,7 @@ public class UIController : MonoBehaviourPunCallbacks
         showCube();
         addFrame();
         deleteFrame();
+        LoadCheck();
     }
 
     public void OnClickOpen()
@@ -211,16 +217,11 @@ public class UIController : MonoBehaviourPunCallbacks
             }
         }
     }
-
-    public void show_modeView()
+    private void LoadCheck()
     {
-        if(RoomManager.instance.GetMode() == 1)
+        if (RoomManager.instance.checking())
         {
-
-        }
-        else if (RoomManager.instance.GetMode() == 1)
-        {
-
+            ImgLoading.SetActive(true);
         }
     }
 }

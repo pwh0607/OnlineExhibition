@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviourPun
     public GameObject camPos;
     private Camera cam;
 
-   
     private int now_mode;
    
     void Start()

@@ -5,15 +5,15 @@ using UnityEngine.UI;
 using UnityEditor;
 using System.IO;
 using Photon.Pun;
+using Photon.Realtime;
 using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Firebase.Database;
 
-public class FBImgUploader : MonoBehaviour
+public class FBImgUploader : MonoBehaviourPunCallbacks
 {
     //FB ÂüÁ¶
-
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
