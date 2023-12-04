@@ -40,7 +40,7 @@ public class UIController : MonoBehaviourPunCallbacks
    
     void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)          //방 주인이 아닌 경우.
         {
             sidebar = customer_sidebar;
             customer_menu.SetActive(true);
@@ -53,14 +53,13 @@ public class UIController : MonoBehaviourPunCallbacks
             customer_menu.SetActive(false);
         }
         
-        sidebar = master_sidebar;
+        //sidebar = master_sidebar;
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
         cube.SetActive(false);
         sidebar.SetActive(false);
         revise_part.SetActive(false);
         ReviseMV.SetActive(false);
         DeleteMV.SetActive(false);
-        ImgLoading.SetActive(false);
     }
 
     void Update()
@@ -74,23 +73,21 @@ public class UIController : MonoBehaviourPunCallbacks
         showCube();
         addFrame();
         deleteFrame();
-        LoadCheck();
     }
 
     public void OnClickOpen()
     {
         RoomManager.instance.setOpenOption();
-        Debug.Log("방 오픈 상태 : " + PhotonNetwork.CurrentRoom.IsOpen);
         //버튼 상태 변경
         if (PhotonNetwork.CurrentRoom.IsOpen)           //공개 상태라면.
         {
-            openBtn_text.GetComponent<Text>().text = "CLOSE";
+            //문구 띄우기
+            completeText.SetActive(true);
+            openBtn_text.GetComponent<TextMeshProUGUI>().text = "OPEN";
         }
         else
         {
-            //문구 띄우기
-            completeText.SetActive(true);
-            openBtn_text.GetComponent<Text>().text = "OPEN";
+            openBtn_text.GetComponent<TextMeshProUGUI>().text = "CLOSE";
         }
     }
 
@@ -215,13 +212,6 @@ public class UIController : MonoBehaviourPunCallbacks
                 if (hit.collider.gameObject.tag == "Frame")
                     Destroy(hit.collider.gameObject);
             }
-        }
-    }
-    private void LoadCheck()
-    {
-        if (RoomManager.instance.checking())
-        {
-            ImgLoading.SetActive(true);
         }
     }
 }
