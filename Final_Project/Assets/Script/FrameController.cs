@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+using Photon.Pun;
 
-public class FrameController : MonoBehaviour
+public class FrameController : MonoBehaviourPun
 {
     private string objName;
-    public GameObject tmp;
+    private string roomName;
     private void Awake()
     {
         RoomManager.instance.add_Frame();
         objName = "Frame" + RoomManager.instance.get_FrameCnt();
-        gameObject.GetComponent<FBImgLoader>().ReadDB();
+        roomName = PhotonNetwork.CurrentRoom.Name;
 
-    }
-    public void setsibal(string name)
-    {
-        tmp.GetComponent<TextMeshPro>().text = name;
     }
     public string getObjName()
     {
         return objName;
+    }
+    public string getRoomName()
+    {
+        return roomName;
     }
 }

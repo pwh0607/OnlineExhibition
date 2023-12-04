@@ -35,17 +35,19 @@ public class FileBrowser : MonoBehaviourPun
     [PunRPC]
     public void OnClickImageLoad()
     {
+        //갤러리에서 이미지 가져오기
         NativeGallery.GetImageFromGallery((file)=> {
             FileInfo img = new FileInfo(file);
 
             if (!string.IsNullOrEmpty(file))
             {
                 //불러오기
-                StartCoroutine(LoadImage(file));
+                StartCoroutine(UpLoadImage(file));
             }
         });
 
-        IEnumerator LoadImage(string imagePath)
+        //FB에 이미지 업로드 하기
+        IEnumerator UpLoadImage(string imagePath)
         {
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
@@ -58,6 +60,9 @@ public class FileBrowser : MonoBehaviourPun
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
+            //방 이름
+
+
             StorageReference uploadRef = storageRef.Child("Room1/" + imageFullName);
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
@@ -67,11 +72,9 @@ public class FileBrowser : MonoBehaviourPun
                 }
                 else
                 {
-                    Debug.Log(imageFullName);
                     Debug.Log("성공!!");
                 }
             });
-
             yield return null;
         }
     }

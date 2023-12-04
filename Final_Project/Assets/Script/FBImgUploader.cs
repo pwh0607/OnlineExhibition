@@ -1,26 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEditor;
 using System.IO;
-using Photon.Pun;
-using Photon.Realtime;
 using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Firebase.Database;
 
-public class FBImgUploader : MonoBehaviourPunCallbacks
+public class FBImgUploader : MonoBehaviour
 {
     //FB 참조
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
 
-    string roomNumber;          //FB storage 폴더 접근용.
-    //public GameObject cube;     //이미지
-
+    string roomName;          //FB storage 폴더 접근용.
     public class Photo
     {
         public string photoPath;
@@ -34,17 +28,8 @@ public class FBImgUploader : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Start()
-    {
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-9dbef-default-rtdb.firebaseio.com/");
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-        storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-9dbef.appspot.com");
-    }
-
     //데이터 베이스 업로드
-    public void DBUpload(string roomName, string imageFullName)
+    public void DBUpload(string imageFullName)
     {
         string objName = this.gameObject.GetComponent<FrameController>().getObjName();
         string photoPath = imageFullName.Trim();
@@ -52,16 +37,14 @@ public class FBImgUploader : MonoBehaviourPunCallbacks
         var data = new Photo(photoPath);
         string json = JsonUtility.ToJson(data);
 
-        databaseRef.Child("rooms").Child(roomName).Child(objName).SetRawJsonValueAsync(json);
+        databaseRef.Child(objName).SetRawJsonValueAsync(json);
 
-        Debug.Log(json);
-        Debug.Log("DB 저장 완료!");
+        //Debug.Log(json);
+        //Debug.Log("DB 저장 완료!");
 
-        //저장후 씬 오브젝트에 이미지 update 
-        gameObject.GetComponent<FBImgLoader>().ReadDB();
     }
 
-    //이미지 업로드
+    //스토리지에 이미지 업로드
     public void OnClickImageLoad()
     {
         NativeGallery.GetImageFromGallery((file) => {
@@ -70,11 +53,11 @@ public class FBImgUploader : MonoBehaviourPunCallbacks
             if (!string.IsNullOrEmpty(file))
             {
                 //불러오기
-                StartCoroutine(LoadImage(file));
+                StartCoroutine(UpLoadImage(file));
             }
         });
 
-        IEnumerator LoadImage(string imagePath)
+        IEnumerator UpLoadImage(string imagePath)
         {
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
@@ -87,7 +70,8 @@ public class FBImgUploader : MonoBehaviourPunCallbacks
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
-            StorageReference uploadRef = storageRef.Child("Room1/" + imageFullName);        //수정 필요!
+
+            StorageReference uploadRef = storageRef.Child(roomName+ "/" + imageFullName);        //수정 필요!
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
                 if (task.IsFaulted || task.IsCanceled)
@@ -99,9 +83,24 @@ public class FBImgUploader : MonoBehaviourPunCallbacks
                     Debug.Log("성공!!");
                 }
             });
-
-            DBUpload("Room1", imageFullName);
+            DBUpload(imageFullName);            //이미지path 도 동시에 DB에 업로드      
             yield return null;
         }
+    }
+
+    void FBinit()
+    {
+        roomName = GetComponent<FrameController>().getRoomName().Trim();         //양 옆 공백 제거
+
+        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-fd6aa-default-rtdb.firebaseio.com/");
+        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        databaseRef = databaseRef.Child("rooms").Child(roomName);
+        
+        storage = FirebaseStorage.DefaultInstance;
+        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com");   
+    }
+    void Start()
+    {
+        FBinit();
     }
 }
