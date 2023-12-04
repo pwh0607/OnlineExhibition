@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "794287130987",
+    "firebase_url": "https://onlineexhibition-fd6aa-default-rtdb.firebaseio.com",
+    "project_id": "onlineexhibition-fd6aa",
+    "storage_bucket": "onlineexhibition-fd6aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794287130987:android:93e11aefd6dd4668f2642e",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Final_Project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD3JbWWkqA5YAoWx5-uWFs3OM1eL3VoW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
