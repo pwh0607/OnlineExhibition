@@ -1090,7 +1090,7 @@ MonoBehaviour:
   customer_menu: {fileID: 2034199872296214609}
   ReviseMV: {fileID: 7318654886521684152}
   DeleteMV: {fileID: 4199184999595337780}
-  ImgLoading: {fileID: 16702017366028369}
+  ImgLoading: {fileID: 0}
   cube: {fileID: 5987984292688280383}
   master_sidebar: {fileID: 7921796566290779320}
   customer_sidebar: {fileID: 417258741923190499}
@@ -1787,11 +1787,6 @@ PrefabInstance:
       objectReference: {fileID: 7492452204117333189}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
---- !u!1 &16702017366028369 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7477982683994520293, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
-  m_PrefabInstance: {fileID: 7492995567897905844}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &417258741923190499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7076862940756024407, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
