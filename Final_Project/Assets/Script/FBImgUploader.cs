@@ -38,10 +38,6 @@ public class FBImgUploader : MonoBehaviour
         string json = JsonUtility.ToJson(data);
 
         databaseRef.Child(objName).SetRawJsonValueAsync(json);
-
-        //Debug.Log(json);
-        //Debug.Log("DB 저장 완료!");
-
     }
 
     //스토리지에 이미지 업로드
@@ -65,13 +61,13 @@ public class FBImgUploader : MonoBehaviour
             string imageFullName = imageName + ".jpg";
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
-            
+
+            DBUpload(imageFullName);                //이미지path DB에 업로드
             //metadata세팅
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
-
-            StorageReference uploadRef = storageRef.Child(roomName+ "/" + imageFullName);        //수정 필요!
+            StorageReference uploadRef = storageRef.Child(roomName + "/" + imageFullName);        //수정 필요!
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
                 if (task.IsFaulted || task.IsCanceled)
@@ -81,9 +77,11 @@ public class FBImgUploader : MonoBehaviour
                 else
                 {
                     Debug.Log("성공!!");
+
+                    //동기화 메서드 이므로 위의 행위가 끝난 후로 실행해야함.
+                    GetComponent<FBImgLoader>().ReadDB();
                 }
             });
-            DBUpload(imageFullName);            //이미지path 도 동시에 DB에 업로드      
             yield return null;
         }
     }
