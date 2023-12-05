@@ -133,9 +133,10 @@ public class UIController : MonoBehaviourPunCallbacks
         //방 수정 모드로 변경.
         normal_part.SetActive(true);
         revise_part.SetActive(false);
+
         //모드뷰어 비활성화.
         ReviseMV.SetActive(false);
-        DeleteMV.SetActive(false);
+        DeleteMV.SetActive(true);
         RoomManager.instance.UpdateMode(0);
     }
 
