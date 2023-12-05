@@ -15,6 +15,8 @@ public class FBImgUploader : MonoBehaviour
     private DatabaseReference databaseRef;
 
     string roomName;          //FB storage 폴더 접근용.
+    string imageFullName;
+
     public class Photo
     {
         public string photoPath;
@@ -26,6 +28,18 @@ public class FBImgUploader : MonoBehaviour
         {
             this.photoPath = photoPath;
         }
+    }
+
+    void FBinit()
+    {
+        roomName = GetComponent<FrameController>().getRoomName().Trim();         //양 옆 공백 제거
+
+        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-fd6aa-default-rtdb.firebaseio.com/");
+        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
+        databaseRef = databaseRef.Child("rooms").Child(roomName);
+
+        storage = FirebaseStorage.DefaultInstance;
+        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com");
     }
 
     //데이터 베이스 업로드
@@ -58,7 +72,7 @@ public class FBImgUploader : MonoBehaviour
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
             string saveImagePath = Application.persistentDataPath + "/Image";
-            string imageFullName = imageName + ".jpg";
+            imageFullName = imageName + ".jpg";
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
 
@@ -77,7 +91,6 @@ public class FBImgUploader : MonoBehaviour
                 else
                 {
                     Debug.Log("성공!!");
-
                     //동기화 메서드 이므로 위의 행위가 끝난 후로 실행해야함.
                     GetComponent<FBImgLoader>().ReadDB();
                 }
@@ -86,17 +99,50 @@ public class FBImgUploader : MonoBehaviour
         }
     }
 
-    void FBinit()
+    //DB 데이터 삭제.(액자 삭제시...)
+    void DeleteDB()
     {
-        roomName = GetComponent<FrameController>().getRoomName().Trim();         //양 옆 공백 제거
+        string objName = GetComponent<FrameController>().getObjName();
+        DatabaseReference del_ref = databaseRef.Child(objName);
 
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-fd6aa-default-rtdb.firebaseio.com/");
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        databaseRef = databaseRef.Child("rooms").Child(roomName);
-        
-        storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com");   
+        del_ref.RemoveValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.Log("DB : DB data Delete Error");
+            }
+            else if (task.IsCompleted)
+            {
+                Debug.Log("DB : Object data Delete 완료...");
+            }
+        });
     }
+
+    void DeleteStorage()
+    {
+        string objName = GetComponent<FrameController>().getObjName();
+        StorageReference del_ref = storageRef.Child(roomName).Child(imageFullName);
+
+        del_ref.DeleteAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                Debug.Log("STORAGE : image 삭제 완료");
+            }
+            else
+            {
+                Debug.Log("STORAGE : image 삭제 실패");
+            }
+        });
+    }
+
+    private void OnDestroy()
+    {
+        //오브젝트 삭제 콜백.
+        DeleteDB();
+        DeleteStorage();
+    }
+
     void Start()
     {
         FBinit();
