@@ -12,7 +12,6 @@ public class FrameController : MonoBehaviourPun
         RoomManager.instance.add_Frame();
         objName = "Frame" + RoomManager.instance.get_FrameCnt();
         roomName = PhotonNetwork.CurrentRoom.Name;
-
     }
     public string getObjName()
     {
