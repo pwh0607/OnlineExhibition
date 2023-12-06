@@ -39,9 +39,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void CreateRoom()
     {
         //방 옵션 생성
-        RoomOptions options = new RoomOptions();
-        options.IsOpen = false;
-
+        RoomOptions options = new RoomOptions
+        {
+            IsOpen = false,
+            EmptyRoomTtl = 100000,        //2주 동안 방 유지.
+        };
+        
         //방 생성하기.
         PhotonNetwork.CreateRoom(makeRoomName, options, null);
     }
@@ -50,7 +53,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnClickRoom(string roomName)
     {
         Debug.Log(roomName + "버튼 클릭!!");
-        PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     public override void OnCreatedRoom()
@@ -77,46 +80,61 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnJoinRandomFailed(returnCode, message);
     }
     //방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    // 방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
+public override void OnRoomListUpdate(List<RoomInfo> roomList)
+{
+    Debug.Log("---------------리스트 업데이트-----------------");
+    Debug.Log($"방개수 : {roomList.Count}");
+    int cen = -40;
+
+    // 방이 열려있는 경우에만 방 버튼 생성
+    foreach (var info in roomList)
     {
-        //리스트를 가져와서 버튼형식으로 생성!
-        //cachedRoomList.Clear();
-        Debug.Log("---------------리스트 업데이트-----------------");
-        Debug.Log($"방개수 : {roomList.Count}");
-
-        for (int i = 0; i < roomList.Count; i++)
+        if (info.IsOpen)
         {
-            //방의 상태가 Open인 경우만...
-            // if (roomList[i].IsOpen)
+            CreateRoomBtn(info.Name, cen);
+            cen += 40;
+        }
+
+        if (info.RemovedFromList)
+        {
+            // 방이 리스트에서 제거된 경우 cachedRoomList에서도 제거
+            if (cachedRoomList.ContainsKey(info.Name))
             {
-                Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
-                instance.transform.GetChild(0).GetComponent<Text>().text = roomList[i].Name;
-                RectTransform btnPos = instance.GetComponent<RectTransform>();
-                instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
-
-                //버튼 앵커 설정
-                Vector2 dir = new Vector2(0.5f, 1);
-                btnPos.anchorMin = dir;
-                btnPos.anchorMax = dir;
-                btnPos.pivot = dir;
-
-                //설정후 RectTransform 변경.
-                btnPos.localPosition = new Vector3(0, 0, 0);
-                btnPos.anchoredPosition = new Vector2(0, -40);
-                btnPos.localScale = new Vector3(1, 1, 1);
+                cachedRoomList.Remove(info.Name);
             }
         }
-        for (int i = 0; i < roomList.Count; i++)
+        else
         {
-            if (roomList[i].RemovedFromList == false)
+            // 방이 처음 생성된 경우 cachedRoomList에 추가
+            if (!cachedRoomList.ContainsKey(info.Name))
             {
-                if (cachedRoomList.ContainsKey(roomList[i].Name) == false)      //방이 처음 생성된 경우.
-                {
-                    cachedRoomList.Add(roomList[i].Name, roomList[i]);
-                }
+                cachedRoomList.Add(info.Name, info);
             }
         }
     }
+}
+
+
+    void CreateRoomBtn(string roomName,int center)
+    {
+        Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
+        instance.transform.GetChild(0).GetComponent<Text>().text = roomName;
+        RectTransform btnPos = instance.GetComponent<RectTransform>();
+        instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
+
+        //버튼 앵커 설정
+        Vector2 dir = new Vector2(0.5f, 1);
+        btnPos.anchorMin = dir;
+        btnPos.anchorMax = dir;
+        btnPos.pivot = dir;
+
+        //설정후 RectTransform 변경.
+        btnPos.localPosition = new Vector3(0, 0, 0);
+        btnPos.anchoredPosition = new Vector2(0, center);
+        btnPos.localScale = new Vector3(1, 1, 1);
+}
+
     //연결 종료
     public void Disconnect() => PhotonNetwork.Disconnect();
     public override void OnDisconnected(DisconnectCause cause)
