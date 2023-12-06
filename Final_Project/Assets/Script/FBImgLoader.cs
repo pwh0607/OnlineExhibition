@@ -18,24 +18,6 @@ public class FBImgLoader : MonoBehaviour
     string roomName;          //FB storage 폴더 접근용.
     public GameObject cube;     //이미지
     string objName;
-
-    //이미지 매핑
-    IEnumerator imageLoad(string MediaUrl)
-    {
-        //RoomManager.instance.loadCheck();
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
-        yield return request.SendWebRequest();
-        if (request.isNetworkError || request.isHttpError)
-        {
-            Debug.Log(request.error);
-        }
-        else
-        {
-            Texture2D texture = new Texture2D(0, 0);
-            texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            cube.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
-        }
-    }
     public void FBinit()
     {
         //변수값 초기화
@@ -51,18 +33,40 @@ public class FBImgLoader : MonoBehaviour
         storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com").Child(roomName);
     }
     //스토리지에서 이미지 가져오기
-    public void GetImage(string photoPath) //파이어베이스 업로드
-    {   
-        StorageReference image = storageRef.Child(photoPath);         //매개변수는 사진명
+    public void GetImage(string photoPath)
+    {
+        StorageReference image = storageRef.Child(photoPath);
+
         image.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
                 Debug.Log("이미지 가져오기 성공.");
-                StartCoroutine(imageLoad(Convert.ToString(task.Result)));
+                StartCoroutine(DownloadImage(Convert.ToString(task.Result)));
+            }
+            else
+            {
+                Debug.LogError("이미지 가져오기 실패: " + task.Exception);
             }
         });
     }
+
+    IEnumerator DownloadImage(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            cube.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
+        }
+        else
+        {
+            Debug.LogError("이미지 다운로드 실패: " + request.error);
+        }
+    }
+
     //데이터베이스에서 photoPath 가져오기
     public void ReadDB()
     {
@@ -96,10 +100,13 @@ public class FBImgLoader : MonoBehaviour
              }
          );
     }
-    void Start()
+    private void Awake()
     {
         //스토리지 참조
         FBinit();
+    }
+    void Start()
+    {
         ReadDB();
     }
 }
