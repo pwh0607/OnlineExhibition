@@ -1777,6 +1777,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3442058002514573588}
+    - target: {fileID: 8120104917661621429, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3442058002514573588}
+    - target: {fileID: 8120104917661621429, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteRoom
+      objectReference: {fileID: 0}
     - target: {fileID: 8473904513328124008, guid: 6dcd52a32671df2489f33af0af5bdd1e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
