@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviourPun
    
     void Start()
     {
+        if (!photonView.IsMine)
+            gameObject.SetActive(false);
+
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
     }

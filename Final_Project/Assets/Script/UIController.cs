@@ -98,6 +98,15 @@ public class UIController : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public void DeleteRoom()
+    {
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+
+        //방 삭제후 주인도 퇴장.
+        PhotonNetwork.LeaveRoom();
+    }
+
     public void OnClickMenuBtn()
     {
         if (menu_clicked)
@@ -128,6 +137,7 @@ public class UIController : MonoBehaviourPunCallbacks
         ReviseMV.SetActive(true);
     }
 
+    //완료 버튼을 눌렀을 때...
     public void OnClickSetNormal()
     {
         //방 수정 모드로 변경.
@@ -136,7 +146,7 @@ public class UIController : MonoBehaviourPunCallbacks
 
         //모드뷰어 비활성화.
         ReviseMV.SetActive(false);
-        DeleteMV.SetActive(true);
+        DeleteMV.SetActive(false);
         RoomManager.instance.UpdateMode(0);
     }
 
