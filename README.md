@@ -10,13 +10,11 @@
 > 3. 액자에 자신의 사진 전시
 
 ### 🗂️기술 스택
-#### language
+#### 🔡 language
+>`C#`
 
-`C#`
-
-#### tool
-
-`Unity` `Photon` `Firebase`
+#### 🛠️ tool
+>`Unity` `Photon` `Firebase`
 
 ### 🔎시스템 구조
 ![OnlineExhibitionFlowChart](https://github.com/pwh0607/OnlineExhibition/assets/120497748/17790526-f4df-4907-a806-36549ff85000)
