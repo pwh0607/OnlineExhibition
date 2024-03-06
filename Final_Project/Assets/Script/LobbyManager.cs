@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using TMPro;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -28,10 +29,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
     }
+
     private void Update()
     {
         makeRoomName = roomName.GetComponent<Text>().text;
-        nickName.GetComponent<Text>().text = PhotonNetwork.NickName;
+        nickName.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
     }
 
     public override void OnConnectedToMaster() => PhotonNetwork.JoinLobby();
@@ -114,7 +116,6 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
         }
     }
 }
-
 
     void CreateRoomBtn(string roomName,int center)
     {
