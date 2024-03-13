@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using TMPro;
-
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject lobbyObj;
@@ -44,9 +44,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions
         {
             IsOpen = false,
-            EmptyRoomTtl = 100000,        //2주 동안 방 유지.
+            EmptyRoomTtl = 100000,
+            MaxPlayers = 8,
         };
-        
+
+        options.CustomRoomProperties = new Hashtable();
+        options.CustomRoomProperties.Add("ownerName", PhotonNetwork.NickName);
         //방 생성하기.
         PhotonNetwork.CreateRoom(makeRoomName, options, null);
     }
@@ -55,7 +58,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnClickRoom(string roomName)
     {
         Debug.Log(roomName + "버튼 클릭!!");
-        PhotonNetwork.JoinRoom(roomName);
+        bool roomJoined = PhotonNetwork.JoinRoom(roomName);
+
+        if (!roomJoined)
+        {
+            Debug.Log("방이 가득 찼습니다.");
+        }
+        else
+        {
+            Debug.Log("방 접속 완료.");
+        }
     }
 
     public override void OnCreatedRoom()
@@ -82,7 +94,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnJoinRandomFailed(returnCode, message);
     }
     //방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
-    // 방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
 public override void OnRoomListUpdate(List<RoomInfo> roomList)
 {
     Debug.Log("---------------리스트 업데이트-----------------");
@@ -90,12 +101,15 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
     int cen = -40;
 
     // 방이 열려있는 경우에만 방 버튼 생성
-    foreach (var info in roomList)
-    {
+    foreach (var info in roomList){
+        int cnt = info.PlayerCount;
+        Button tmp;
         if (info.IsOpen)
         {
-            CreateRoomBtn(info.Name, cen);
+            tmp = CreateRoomBtn(info.Name, cnt, cen);
             cen += 40;
+        }else{
+
         }
 
         if (info.RemovedFromList)
@@ -117,10 +131,12 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
     }
 }
 
-    void CreateRoomBtn(string roomName,int center)
+    Button CreateRoomBtn(string roomName,int playerCnt, int center)
     {
         Button instance = Instantiate(RoomBtnPrefab);           //버튼 instance
         instance.transform.GetChild(0).GetComponent<Text>().text = roomName;
+        instance.transform.GetChild(1).GetComponent<Text>().text = playerCnt + " / 8";
+
         RectTransform btnPos = instance.GetComponent<RectTransform>();
         instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
 
@@ -134,6 +150,8 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
         btnPos.localPosition = new Vector3(0, 0, 0);
         btnPos.anchoredPosition = new Vector2(0, center);
         btnPos.localScale = new Vector3(1, 1, 1);
+
+        return instance;
 }
 
     //연결 종료
