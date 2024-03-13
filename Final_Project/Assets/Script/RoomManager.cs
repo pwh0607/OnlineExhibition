@@ -5,11 +5,10 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static RoomManager instance // 외부에서 싱글톤 오브젝트를 사용할 땨 프로퍼티
+    public static RoomManager instance 
     {
         get
         {
-            // 만약 싱글톤 변수에 아직 오브젝트가 할당되지 않았다면
             if (m_instance == null)
             {
                 m_instance = FindObjectOfType<RoomManager>();
@@ -33,7 +32,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        // 씬에 싱글톤 오브젝트가 된 다른 GameManager 오브젝트가 있다면
         if (instance != this)
         {
             Destroy(gameObject);
@@ -49,7 +47,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         frame_cnt = 0;
         loadChecker = false;
     }
-    //1 : 액자 수정, 3 : 액자 삭제
     public void UpdateMode(int mode)
     {
         this.now_mode = mode;

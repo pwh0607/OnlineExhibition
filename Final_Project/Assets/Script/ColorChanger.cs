@@ -36,7 +36,7 @@ public class ColorChanger : MonoBehaviourPunCallbacks
 
     public void AddFrame()
     {
-        if (is_create)      //생성 가능 상태인 경우.
+        if (is_create)      
         {
             Vector3 pos = new Vector3(transform.position.x, transform.position.y - 1.3f, transform.position.z);
             GameObject instance = PhotonNetwork.InstantiateRoomObject(framePrefab.name, pos, transform.rotation);

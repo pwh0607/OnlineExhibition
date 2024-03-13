@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPun
 {
     //움직임
@@ -22,7 +23,8 @@ public class PlayerController : MonoBehaviourPun
     private Camera cam;
 
     private int now_mode;
-   
+    private string roll = "visitor";
+
     void Start()
     {
         if (!photonView.IsMine)
@@ -30,6 +32,19 @@ public class PlayerController : MonoBehaviourPun
 
         m_animator = GetComponent<Animator>();
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
+
+        //방주인 이름 가져오기용
+        Hashtable hashRef = PhotonNetwork.CurrentRoom.CustomProperties;
+        Debug.Log("방주인 : " + hashRef["ownerName"]);
+
+        if((string)hashRef["ownerName"] == PhotonNetwork.NickName)
+        {
+            roll = "owner";
+        }
+        else
+        {
+            roll = "visitor";
+        }
     }
 
     void Update()
@@ -40,9 +55,18 @@ public class PlayerController : MonoBehaviourPun
             return;
         }
 
+        if(roll == "visitor")
+        {
+            //방문객은 액자 자세히 보기 기능 추가.
+            showFrame();
+        }
+        else
+        {
+            SetImg();
+        }
+
         PlayerMove();
         SetCamPos();
-        SetImg();
     }
     private void PlayerMove()
     {
@@ -71,7 +95,7 @@ public class PlayerController : MonoBehaviourPun
         }
     }
 
-    //액자 자세히 보기.
+    //액자 자세히 보기 - 방문자 전용.
     public void showFrame()
     {
         if (Input.GetMouseButtonDown(0))      //방 주인이 아닌 경우.     
@@ -82,14 +106,20 @@ public class PlayerController : MonoBehaviourPun
             {
                 if (hit.collider.gameObject.tag == "Frame")   //ray가 액자에 맞닿은 순간.
                 {
-                    now_mode = 2;
                     if (RoomManager.instance.GetMode() == 0)      //일반 모드
                     {
-                        //카메라 위치를 액자의 z값에 ...블라블라. z -> -9.3f
-                        Vector3 hitObj = hit.collider.gameObject.transform.position;
-                        Vector3 camPos = new Vector3(hitObj.x, hitObj.y, hitObj.z - 9.3f);
+                        GameObject photo = hit.collider.gameObject;
+                        now_mode = 2;
+                        Vector3 hitObj = photo.transform.position;
+                        Vector3 camPos = new Vector3(hitObj.x, hitObj.y + 2, hitObj.z - 8.0f);
+
                         cam.transform.position = camPos;
+                        cam.transform.rotation = Quaternion.identity;
                     }
+                }
+                else{
+                    //액자 미클릭시.
+                    now_mode = 0;
                 }
             }
         }
