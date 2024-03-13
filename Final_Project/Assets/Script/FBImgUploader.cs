@@ -6,17 +6,18 @@ using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Firebase.Database;
+using Photon.Pun;
 
-public class FBImgUploader : MonoBehaviour
+public class FBImgUploader : MonoBehaviourPun
 {
     //FB 참조
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
-
-    string roomName;          //FB storage 폴더 접근용.
+    //string roomName;
     string imageFullName;
 
+    FBManager fbManager;
     public class Photo
     {
         public string photoPath;
@@ -32,14 +33,29 @@ public class FBImgUploader : MonoBehaviour
 
     void FBinit()
     {
+        /*
         roomName = GetComponent<FrameController>().getRoomName().Trim();         //양 옆 공백 제거
+        roomName = PhotonNetwork.CurrentRoom.Name;
 
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-fd6aa-default-rtdb.firebaseio.com/");
+        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-6cf84-default-rtdb.firebaseio.com/");
         databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         databaseRef = databaseRef.Child("rooms").Child(roomName);
 
         storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com");
+        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-6cf84.appspot.com");
+        */
+        fbManager = FBManager.instance;
+
+        //test
+        if(fbManager != null)
+        {
+            databaseRef = fbManager.GetDatabaseReference();
+            storageRef = fbManager.GetStorageReference();
+        }
+        else
+        {
+            Debug.Log("FB manager null...'");
+        }
     }
 
     //데이터 베이스 업로드
@@ -59,7 +75,6 @@ public class FBImgUploader : MonoBehaviour
     {
         NativeGallery.GetImageFromGallery((file) => {
             FileInfo img = new FileInfo(file);
-
             if (!string.IsNullOrEmpty(file))
             {
                 //불러오기
@@ -72,6 +87,7 @@ public class FBImgUploader : MonoBehaviour
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
             string saveImagePath = Application.persistentDataPath + "/Image";
+
             imageFullName = imageName + ".jpg";
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
@@ -80,17 +96,17 @@ public class FBImgUploader : MonoBehaviour
             //metadata세팅
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
-
-            StorageReference uploadRef = storageRef.Child(roomName + "/" + imageFullName);        //수정 필요!
+            // + (roomName + "/"
+            StorageReference uploadRef = storageRef.Child(imageFullName);        //수정 필요!
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
                 if (task.IsFaulted || task.IsCanceled)
                 {
-                    Debug.Log("실패...");
+                    Debug.Log("업로드 실패...");
                 }
                 else
                 {
-                    Debug.Log("성공!!");
+                    Debug.Log("업로드 성공!!");
                     //동기화 메서드 이므로 위의 행위가 끝난 후로 실행해야함.
                     GetComponent<FBImgLoader>().ReadDB();
                 }
@@ -99,7 +115,7 @@ public class FBImgUploader : MonoBehaviour
         }
     }
 
-    //DB 데이터 삭제.(액자 삭제시...)
+    //DB에서 데이터 삭제.(액자 삭제시...)
     void DeleteDB()
     {
         string objName = GetComponent<FrameController>().getObjName();
@@ -121,7 +137,7 @@ public class FBImgUploader : MonoBehaviour
     void DeleteStorage()
     {
         string objName = GetComponent<FrameController>().getObjName();
-        StorageReference del_ref = storageRef.Child(roomName).Child(imageFullName);
+        StorageReference del_ref = storageRef.Child(imageFullName);
 
         del_ref.DeleteAsync().ContinueWithOnMainThread(task =>
         {

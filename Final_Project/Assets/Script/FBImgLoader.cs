@@ -7,8 +7,9 @@ using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
 using Firebase.Database;
+using Photon.Pun;
 
-public class FBImgLoader : MonoBehaviour
+public class FBImgLoader : MonoBehaviourPun
 {
     //FB 참조
     FirebaseStorage storage;
@@ -17,32 +18,39 @@ public class FBImgLoader : MonoBehaviour
 
     string roomName;          //FB storage 폴더 접근용.
     public GameObject cube;     //이미지
+    //현재 액자의 번호.
     string objName;
+
+    FBManager fbManager;
     public void FBinit()
     {
-        //변수값 초기화
-        roomName = GetComponent<FrameController>().getRoomName().Trim();           //나중에 scene이름으로 변경.
-        objName = this.gameObject.GetComponent<FrameController>().getObjName();
+        fbManager = FBManager.instance;
 
-        //데이터베이스 참조
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibitiontest-default-rtdb.firebaseio.com/");
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference.Child("rooms").Child(roomName);
-
-        //스토리지 참조
-        storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-fd6aa.appspot.com").Child(roomName);
+        if (fbManager != null)
+        {
+            databaseRef = fbManager.GetDatabaseReference();
+            storageRef = fbManager.GetStorageReference();
+        }
+        else
+        {
+            Debug.Log("FB manager null...'");
+        }
     }
     //스토리지에서 이미지 가져오기
     public void GetImage(string photoPath)
     {
         StorageReference image = storageRef.Child(photoPath);
-
         image.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
                 Debug.Log("이미지 가져오기 성공.");
                 StartCoroutine(DownloadImage(Convert.ToString(task.Result)));
+
+                string photoName = photoPath.Substring(0, photoPath.Length - 4);
+                Debug.Log(photoName);
+                gameObject.GetComponent<FrameController>().setPhotoName(photoName);
+
             }
             else
             {
@@ -70,7 +78,8 @@ public class FBImgLoader : MonoBehaviour
     //데이터베이스에서 photoPath 가져오기
     public void ReadDB()
     {
-        databaseRef.Child(objName).GetValueAsync().ContinueWith(
+        objName = GetComponent<FrameController>().getObjName();
+        databaseRef.Child(GetComponent<FrameController>().getObjName()).GetValueAsync().ContinueWith(
              task =>
              {
                  if (task.IsFaulted)
@@ -90,11 +99,9 @@ public class FBImgLoader : MonoBehaviour
 
                      //데이터 가져오기 성공시...
                      Debug.Log("Load Data Success!");
-
                      // JSON 자체가 딕셔너리 기반   key는 오브젝트 이름(frame(n)) 값이 사진path;
                      IDictionary dirInfo = (IDictionary)data.Value;
-                     string photoPath = Convert.ToString(dirInfo["photoPath"]); 
-                     Debug.Log("이미지 불러오기...");
+                     string photoPath = Convert.ToString(dirInfo["photoPath"]);
                      GetImage(photoPath);
                  }
              }
