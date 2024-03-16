@@ -17,7 +17,7 @@
 >`Unity` `Photon` `Firebase`
 
 ### 🔎시스템 구조
-![OnlineExhibitionFlowChart](https://github.com/pwh0607/OnlineExhibition/assets/120497748/17790526-f4df-4907-a806-36549ff85000)
+![Untitled](https://github.com/pwh0607/OnlineExhibition/assets/120497748/e62c4625-fd6a-4cca-818e-388a3f3240d8)
 
 ### 📲주요화면
 
