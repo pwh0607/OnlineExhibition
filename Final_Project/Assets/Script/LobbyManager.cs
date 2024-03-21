@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Photon.Realtime;
 using TMPro;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     public GameObject lobbyObj;
@@ -50,6 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         options.CustomRoomProperties = new Hashtable();
         options.CustomRoomProperties.Add("ownerName", PhotonNetwork.NickName);
+
         //방 생성하기.
         PhotonNetwork.CreateRoom(makeRoomName, options, null);
     }
@@ -93,43 +95,42 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("방 입장 실패 : " + message);
         base.OnJoinRandomFailed(returnCode, message);
     }
+
     //방 리스트 가져오기 -- 로비에 접근했을때만 콜백된다!.
-public override void OnRoomListUpdate(List<RoomInfo> roomList)
-{
-    Debug.Log("---------------리스트 업데이트-----------------");
-    Debug.Log($"방개수 : {roomList.Count}");
-    int cen = -40;
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        Debug.Log("---------------리스트 업데이트-----------------");
+        Debug.Log($"방개수 : {roomList.Count}");
+        int cen = -40;
 
-    // 방이 열려있는 경우에만 방 버튼 생성
-    foreach (var info in roomList){
-        int cnt = info.PlayerCount;
-        Button tmp;
-        if (info.IsOpen)
-        {
-            tmp = CreateRoomBtn(info.Name, cnt, cen);
-            cen += 40;
-        }else{
-
-        }
-
-        if (info.RemovedFromList)
-        {
-            // 방이 리스트에서 제거된 경우 cachedRoomList에서도 제거
-            if (cachedRoomList.ContainsKey(info.Name))
+        // 방이 열려있는 경우에만 방 버튼 생성
+        foreach (var info in roomList){
+            int cnt = info.PlayerCount;
+            Button tmp;
+            if (info.IsOpen)
             {
-                cachedRoomList.Remove(info.Name);
+                tmp = CreateRoomBtn(info.Name, cnt, cen);
+                cen += 40;
             }
-        }
-        else
-        {
-            // 방이 처음 생성된 경우 cachedRoomList에 추가
-            if (!cachedRoomList.ContainsKey(info.Name))
+
+            if (info.RemovedFromList)
             {
-                cachedRoomList.Add(info.Name, info);
+                // 방이 리스트에서 제거된 경우 cachedRoomList에서도 제거
+                if (cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList.Remove(info.Name);
+                }
+            }
+            else
+            {
+                // 방이 처음 생성된 경우 cachedRoomList에 추가
+                if (!cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList.Add(info.Name, info);
+                }
             }
         }
     }
-}
 
     Button CreateRoomBtn(string roomName,int playerCnt, int center)
     {
@@ -141,7 +142,7 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
         instance.transform.SetParent(contentView.transform);        //content 뷰의 자식으로 추가
 
         //버튼 앵커 설정
-        Vector2 dir = new Vector2(0.5f, 1);
+        Vector2 dir = new Vector2(0.5f, 1f);
         btnPos.anchorMin = dir;
         btnPos.anchorMax = dir;
         btnPos.pivot = dir;
@@ -158,6 +159,7 @@ public override void OnRoomListUpdate(List<RoomInfo> roomList)
     public void Disconnect() => PhotonNetwork.Disconnect();
     public override void OnDisconnected(DisconnectCause cause)
     {
+        Debug.Log("방에서 나가 로비로 이동합니다...");
         SceneManager.LoadScene("SignIn");
     }
 }

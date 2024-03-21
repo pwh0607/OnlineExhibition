@@ -22,9 +22,6 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject ReviseMV;
     public GameObject DeleteMV;
 
-    //test용 오브젝트 추후 삭제
-    public GameObject ImgLoading;
-
     //방 오브젝트 생성용
     public GameObject cube;            //액자 생성용 큐브
 
@@ -37,7 +34,7 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public GameObject revise_part;
     public GameObject normal_part;
-   
+
     void Start()
     {
         if (!PhotonNetwork.IsMasterClient)          //방 주인이 아닌 경우.
@@ -91,11 +88,16 @@ public class UIController : MonoBehaviourPunCallbacks
         }
     }
 
-    //버튼 컨트롤
+    //버튼 컨트롤s
     public void LeaveRoom()
     {
-        //방을 나오고 씬이동
-        PhotonNetwork.LeaveRoom();
+
+        Debug.Log("방 나가기");
+        PhotonNetwork.LeaveRoom(); 
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
     public void DeleteRoom()
@@ -166,7 +168,7 @@ public class UIController : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    
     private void addFrame()
     {
         if (Input.GetMouseButtonDown(0) && cube.activeSelf)
@@ -183,7 +185,6 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void OnPointerExit()
     {
-        //포인터가 밖으로 나왔을때 모드에 맞도록...
         if (RoomManager.instance.GetMode() == 1) 
         {
             this.cube.SetActive(true);
@@ -194,7 +195,6 @@ public class UIController : MonoBehaviourPunCallbacks
         completeText.SetActive(true);
     }
 
-    //Delete 버튼 클릭시.
     public void setDeleteMode()
     {
         if(RoomManager.instance.GetMode() == 3)
@@ -211,7 +211,6 @@ public class UIController : MonoBehaviourPunCallbacks
         }
     }
     
-    //mode = 3 이면 삭제 모드.
     public void deleteFrame()
     {
         if (RoomManager.instance.GetMode() == 3 && Input.GetMouseButtonDown(0))
@@ -224,5 +223,10 @@ public class UIController : MonoBehaviourPunCallbacks
                     Destroy(hit.collider.gameObject);
             }
         }
+    }
+
+    public void showCommentBtn()
+    {
+       
     }
 }

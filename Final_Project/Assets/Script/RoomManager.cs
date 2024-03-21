@@ -1,16 +1,20 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static RoomManager instance 
+    public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
     {
         get
         {
+            // 만약 싱글톤 변수에 아직 오브젝트가 할당되지 않았다면
             if (m_instance == null)
             {
+                // 씬에서 GameManager 오브젝트를 찾아 할당
                 m_instance = FindObjectOfType<RoomManager>();
             }
 
@@ -19,7 +23,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private static RoomManager m_instance;
+    private static RoomManager m_instance; // 싱글톤이 할당될 static 변수
+    //public static RoomManager instance;
 
     public GameObject playerPrefab;
     public GameObject playerPos;
@@ -28,29 +33,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private int now_mode;
 
     private bool loadChecker;
-      //싱글톤 변수
-
     private void Awake()
     {
-        if (instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
+        //instance = this;
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
-    {
-        Debug.Log("플레이어 생성 !");
+    {   
         Vector3 SpawnPos = playerPos.transform.position;
-        PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
+        GameObject user =  PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
+        
         now_mode = 0;
         frame_cnt = 0;
         loadChecker = false;
     }
+
     public void UpdateMode(int mode)
     {
         this.now_mode = mode;
     }
+
     public int GetMode()
     {
         return now_mode;
@@ -69,11 +76,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsOpen = !PhotonNetwork.CurrentRoom.IsOpen;
     }
 
-    public override void OnLeftRoom()
-    {
-        Debug.Log("방 나가기");
-        PhotonNetwork.LoadLevel("LobbyScene");
-    }
     public void add_Frame()
     {
         frame_cnt++;
@@ -91,5 +93,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public bool checking()
     {
         return loadChecker;
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("LobbyScene");
+    }
+
+
+    public RoomManager getInstance()
+    {
+        return instance;
     }
 }
