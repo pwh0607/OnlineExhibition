@@ -17,8 +17,7 @@ public class FBManager : MonoBehaviourPun
     DatabaseReference databaseRef;
 
     private string currentRoomName;
-
-    
+        
     private void Awake()
     {
         if(instance == null)
@@ -34,7 +33,6 @@ public class FBManager : MonoBehaviourPun
             //½ºÅä¸®Áö ÂüÁ¶
             storage = FirebaseStorage.DefaultInstance;
             storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-6cf84.appspot.com").Child(currentRoomName);
-            Debug.Log("FBManager ½Ì±ÛÅæ....");
         }
         else
         {

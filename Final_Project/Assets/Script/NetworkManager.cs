@@ -6,29 +6,44 @@ using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
 
+using System;
+using System.Threading.Tasks;
+
+using Firebase;
+using Firebase.Extensions;
+using Firebase.Auth;
+using Firebase.Firestore;
+
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public FirebaseAuth authRef;
+    public FirebaseFirestore store;
+    public DocumentReference docRef;
+
     private string userNickname;
-    public InputField nickNameField;
-    public GameObject warnMsg;
-    public GameObject ConnectMsg;
+    public InputField emailField;
+    public InputField passwordField;
+
+    public GameObject connectMsg;
+    public GameObject signUpPart;
     public Button startBtn;
 
+    private void Awake()
+    {
+        authRef = FBAuthManager.instance.getAuthRef();
+        store = FBAuthManager.instance.getStoreRef();
+    }
     private void Start()
     {
-        warnMsg.SetActive(false);
-        ConnectMsg.SetActive(false);
-    }
-    private void Update()
-    {
-        PopUp();
+        connectMsg.SetActive(false);
+        //패스워드 형식으로 세팅
+        passwordField.contentType = InputField.ContentType.Password;
     }
     //서버 연결
     public void Connect()
     {
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.LocalPlayer.NickName = nickNameField.text;
         startBtn.interactable = false;
+        PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnConnectedToMaster()
     {
@@ -39,34 +54,47 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log(PhotonNetwork.LocalPlayer.NickName + " : 로비 참가 성공!");
         PhotonNetwork.LoadLevel("LobbyScene");
     }
-    private void setActivation()
+
+    public void setSignUpWindow()
     {
-        warnMsg.SetActive(!warnMsg.active);
+        signUpPart.SetActive(true);
     }
-    //유효성 검사
-    public void CheckName()
+
+    public async void login()
     {
-        if (nickNameField.text.Length > 10 || nickNameField.text.Length < 2)       //10글자가 넘는 다면...
+        string email = emailField.text;
+        string password = passwordField.text;
+        connectMsg.SetActive(true);
+        try
         {
-            Debug.Log(nickNameField.text.Length + "글자수는 10자 미만 2글자 이상으로 해주세요.");
-            setActivation();
-        }
-        else
-        {       //조건 성립시 커넥트
-            ConnectMsg.SetActive(true);
-            Connect();
+            await authRef.SignInWithEmailAndPasswordAsync(email, password);
+            if (authRef.CurrentUser != null)
+            {
+                string uid = authRef.CurrentUser.UserId;
+                await getNickname(uid);             //해당 비동기 작업 수행후 아래의 코드 실행
+                Connect();
+            }
+         }catch(Exception e){
+            Debug.Log("로그인 실패 : " + e.Message);
+            connectMsg.SetActive(false);
         }
     }
 
-    public void PopUp()
+    async Task getNickname(string uid)
     {
-        if (warnMsg.active)
-        {
-            //활성화 상태에서 배경 터치시 제거
-            if (Input.GetMouseButtonDown(0))
+        try
+        {     
+            docRef = store.Collection("users").Document(uid);
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+            if (snapshot.Exists)
             {
-                warnMsg.SetActive(false);
+                string nickname = snapshot.GetValue<string>("nickname");
+                PhotonNetwork.NickName = nickname;
             }
+        }catch(Exception e)
+        {
+            Debug.Log("닉네임 읽기 실패 : " + e.Message);
         }
+
     }
 }

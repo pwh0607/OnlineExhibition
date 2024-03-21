@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
+
 using Firebase;
 using Firebase.Extensions;
 using Firebase.Storage;
@@ -16,9 +17,8 @@ public class FBImgLoader : MonoBehaviourPun
     StorageReference storageRef;
     DatabaseReference databaseRef;
 
-    string roomName;          //FB storage 폴더 접근용.
     public GameObject cube;     //이미지
-    //현재 액자의 번호.
+    string roomName;          //FB storage 폴더 접근용.
     string objName;
 
     FBManager fbManager;
@@ -40,6 +40,7 @@ public class FBImgLoader : MonoBehaviourPun
     public void GetImage(string photoPath)
     {
         StorageReference image = storageRef.Child(photoPath);
+        Debug.Log("photoPath" + photoPath);
         image.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
@@ -48,9 +49,6 @@ public class FBImgLoader : MonoBehaviourPun
                 StartCoroutine(DownloadImage(Convert.ToString(task.Result)));
 
                 string photoName = photoPath.Substring(0, photoPath.Length - 4);
-                Debug.Log(photoName);
-                gameObject.GetComponent<FrameController>().setPhotoName(photoName);
-
             }
             else
             {
@@ -63,7 +61,7 @@ public class FBImgLoader : MonoBehaviourPun
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         yield return request.SendWebRequest();
-
+        Debug.Log("url:" + url);
         if (request.result == UnityWebRequest.Result.Success)
         {
             Texture2D texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
@@ -107,6 +105,7 @@ public class FBImgLoader : MonoBehaviourPun
              }
          );
     }
+        
     private void Awake()
     {
         //스토리지 참조

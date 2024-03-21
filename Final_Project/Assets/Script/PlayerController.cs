@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using System;
+using TMPro;
 
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPun
@@ -23,20 +26,39 @@ public class PlayerController : MonoBehaviourPun
     private Camera cam;
 
     private int now_mode;
+    private GameObject selectedObj;
+
+    public bool isBtnHover;
+
     private string roll = "visitor";
 
     void Start()
     {
+        isBtnHover = false;
+        selectedObj = null;
+        now_mode = 0;
         if (!photonView.IsMine)
+        {
             gameObject.SetActive(false);
-
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+        
         m_animator = GetComponent<Animator>();
-        cam = GameObject.Find("mainCam").GetComponent<Camera>();
+        try
+        {
+            cam = GameObject.Find("mainCam").GetComponent<Camera>();
+
+        }catch(Exception e)
+        {
+            Debug.Log("카메라 인식 실패");
+        }
 
         //방주인 이름 가져오기용
         Hashtable hashRef = PhotonNetwork.CurrentRoom.CustomProperties;
-        Debug.Log("방주인 : " + hashRef["ownerName"]);
-
+        
         if((string)hashRef["ownerName"] == PhotonNetwork.NickName)
         {
             roll = "owner";
@@ -46,18 +68,17 @@ public class PlayerController : MonoBehaviourPun
             roll = "visitor";
         }
     }
-
     void Update()
     {
+        
         if (!photonView.IsMine)
         {
             m_UI.SetActive(false);
             return;
         }
-
+        
         if(roll == "visitor")
         {
-            //방문객은 액자 자세히 보기 기능 추가.
             showFrame();
         }
         else
@@ -71,7 +92,7 @@ public class PlayerController : MonoBehaviourPun
     private void PlayerMove()
     {
         CharacterController controller = GetComponent<CharacterController>();
-        float gravity = 20.0f;              //강한 중력을 주어
+        float gravity = 20.0f;             
 
         float h = sJoystick.GetHorizontalValue();
         float v = sJoystick.GetVerticalValue();
@@ -90,37 +111,50 @@ public class PlayerController : MonoBehaviourPun
     {
         if(now_mode == 0)
         {
-            cam.transform.parent = camPos.transform;
-            cam.transform.localPosition = Vector3.zero;
+            cam.transform.position = camPos.transform.position;
+            cam.transform.rotation = camPos.transform.rotation;
         }
     }
-
-    //액자 자세히 보기 - 방문자 전용.
     public void showFrame()
     {
-        if (Input.GetMouseButtonDown(0))      //방 주인이 아닌 경우.     
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Input.GetMouseButtonDown(0))      //방 주인이 아닌 경우.     
             {
+                Debug.Log(hit.collider.gameObject);
                 if (hit.collider.gameObject.tag == "Frame")   //ray가 액자에 맞닿은 순간.
                 {
                     if (RoomManager.instance.GetMode() == 0)      //일반 모드
                     {
-                        GameObject photo = hit.collider.gameObject;
-                        now_mode = 2;
-                        Vector3 hitObj = photo.transform.position;
-                        Vector3 camPos = new Vector3(hitObj.x, hitObj.y + 2, hitObj.z - 8.0f);
+                        selectedObj = hit.collider.gameObject;
 
-                        cam.transform.position = camPos;
-                        cam.transform.rotation = Quaternion.identity;
+                        //2번은 액자 보기 모드.
+                        now_mode = 2;
+
+                        //댓글 버튼 활성화.
+                        selectedObj.GetComponent<CommentController>().setActionCommentBtn(true);
+
+                        Vector3 targetPosition = selectedObj.transform.position;
+
+                        cam.transform.position = targetPosition - selectedObj.transform.up * 9;
+                        cam.transform.LookAt(selectedObj.transform);
                     }
                 }
                 else{
-                    //액자 미클릭시.
-                    now_mode = 0;
+                    //버튼 클릭시 해당 함수 무시.
+                    if(selectedObj != null)
+                    {
+                        if(!selectedObj.GetComponent<CommentController>().commentBtn.GetComponent<FrameUICheckSC>().isHovering && !selectedObj.GetComponent<CommentController>().commentPart.GetComponent<FrameUICheckSC>().isHovering)
+                        {
+                            selectedObj.GetComponent<CommentController>().setActionCommentBtn(false);
+                            now_mode = 0;
+                            selectedObj = null;
+                        }
+                    }
                 }
+                Debug.Log("select : " + selectedObj);
             }
         }
     }
@@ -140,5 +174,9 @@ public class PlayerController : MonoBehaviourPun
                 }
             }
         }   
+    }
+    public Camera getCamRef()
+    {
+        return cam;
     }
 }

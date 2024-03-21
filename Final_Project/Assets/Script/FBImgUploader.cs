@@ -14,7 +14,7 @@ public class FBImgUploader : MonoBehaviourPun
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
-    //string roomName;
+
     string imageFullName;
 
     FBManager fbManager;
@@ -33,17 +33,6 @@ public class FBImgUploader : MonoBehaviourPun
 
     void FBinit()
     {
-        /*
-        roomName = GetComponent<FrameController>().getRoomName().Trim();         //양 옆 공백 제거
-        roomName = PhotonNetwork.CurrentRoom.Name;
-
-        FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibition-6cf84-default-rtdb.firebaseio.com/");
-        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
-        databaseRef = databaseRef.Child("rooms").Child(roomName);
-
-        storage = FirebaseStorage.DefaultInstance;
-        storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-6cf84.appspot.com");
-        */
         fbManager = FBManager.instance;
 
         //test
@@ -87,17 +76,15 @@ public class FBImgUploader : MonoBehaviourPun
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
             string saveImagePath = Application.persistentDataPath + "/Image";
-
             imageFullName = imageName + ".jpg";
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
+            DBUpload(imageFullName);
 
-            DBUpload(imageFullName);                //이미지path DB에 업로드
-            //metadata세팅
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
-            // + (roomName + "/"
-            StorageReference uploadRef = storageRef.Child(imageFullName);        //수정 필요!
+
+            StorageReference uploadRef = storageRef.Child(imageFullName);
             uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
             {
                 if (task.IsFaulted || task.IsCanceled)
@@ -152,13 +139,15 @@ public class FBImgUploader : MonoBehaviourPun
         });
     }
 
+    /*
     private void OnDestroy()
     {
         //오브젝트 삭제 콜백.
         DeleteDB();
         DeleteStorage();
     }
-
+    */
+    
     void Start()
     {
         FBinit();
