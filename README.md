@@ -21,10 +21,17 @@
 ![Untitled](https://github.com/pwh0607/OnlineExhibition/assets/120497748/e62c4625-fd6a-4cca-818e-388a3f3240d8)
 
 ### 📲주요화면
-> `로그인 및 회원가입`
-> `로비`
-> `방 만들기`
-> `댓글 달기`
+`로그인 및 회원가입`<br>
+<br>`로비`<br>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/eeaec27b-edb4-40e8-a640-48ac7cc97565" width="40%" height="30%"/>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/f2d9cc5c-df97-4448-be9d-63a118e3cb45" width="40%" height="30%"/>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/0de3c57f-a4ee-4867-88e2-42fba3712d39" width="40%" height="30%"/>
+<br>`방 만들기`<br>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/789f5e95-a141-4155-8772-9ed39b3eac8a" width="40%" height="30%"/>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/de0c2332-4b8a-409c-bb3a-1dfd684ffd6b" width="40%" height="30%"/>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/5407ae44-bf2a-4231-857e-73b9f0b301b6" width="40%" height="30%"/>
+<br>`댓글 달기`<br>
+<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/da18f897-dcd8-4ca3-8549-6b24bdcdaea1" width="40%" height="30%"/>
 
 ### 👨‍💻개발자
 |박완호|
