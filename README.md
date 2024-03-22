@@ -24,6 +24,11 @@
 #### `로그인 및 회원가입`<br>
 <details>
      <summary>로그인 및 회원가입</summary>
+
+|로그인|회원가입|
+|:--:|:--:|
+|<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/691a2344-08af-4985-976a-d70e06eb69a0" width="45%" height="100%"/>|<img src="https://github.com/pwh0607/OnlineExhibition/assets/120497748/9fd27fbd-cc6d-4af2-9698-6c28900f8c6a" width="45%" height="100%"/>|
+
 </details>
 
 #### <br>`로비`<br>
