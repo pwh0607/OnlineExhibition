@@ -54,5 +54,5 @@
 
 ### 👨‍💻개발자
 |박완호|
-|------|
-|![박완호](https://github.com/HS-GS31/GS31/assets/69100145/a9322f87-ca85-40b5-9997-edf3d279f651)|
+|:-:|
+|<img src="https://github.com/HS-GS31/GS31/assets/69100145/a9322f87-ca85-40b5-9997-edf3d279f651" width="60%" height="60%"/>|
