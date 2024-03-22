@@ -1,4 +1,4 @@
-# 🖼️ OnlineExhibition 🖼️
+# 🖼️ MyExhibition 🖼️
 
 ### 프로젝트 소개
 > 📸 SNS처러 자신이 찍은 사진을 전시하여 다양한 사람들과 공유해보세요.     
