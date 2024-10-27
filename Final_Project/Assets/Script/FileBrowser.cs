@@ -29,24 +29,20 @@ public class FileBrowser : MonoBehaviourPun
     private void OnMouseDown()
     {
         PhotonView pv = gameObject.GetComponent<PhotonView>();
-        //pv.RPC("OnClickImageLoad", RpcTarget.All);
     }
 
     [PunRPC]
     public void OnClickImageLoad()
     {
-        //갤러리에서 이미지 가져오기
         NativeGallery.GetImageFromGallery((file)=> {
             FileInfo img = new FileInfo(file);
 
             if (!string.IsNullOrEmpty(file))
             {
-                //불러오기
                 StartCoroutine(UpLoadImage(file));
             }
         });
 
-        //FB에 이미지 업로드 하기
         IEnumerator UpLoadImage(string imagePath)
         {
             byte[] imageData = File.ReadAllBytes(imagePath);
@@ -56,25 +52,11 @@ public class FileBrowser : MonoBehaviourPun
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
 
-            //metadata세팅
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
-            //방 이름
-
-
             StorageReference uploadRef = storageRef.Child("Room1/" + imageFullName);
-            uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
-            {
-                if (task.IsFaulted || task.IsCanceled)
-                {
-                    Debug.Log("실패...");
-                }
-                else
-                {
-                    Debug.Log("성공!!");
-                }
-            });
+            uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) => { });
             yield return null;
         }
     }

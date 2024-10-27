@@ -5,10 +5,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
-
 using System;
 using System.Threading.Tasks;
-
 using Firebase;
 using Firebase.Extensions;
 using Firebase.Auth;
@@ -36,10 +34,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         connectMsg.SetActive(false);
-        //패스워드 형식으로 세팅
         passwordField.contentType = InputField.ContentType.Password;
     }
-    //서버 연결
     public void Connect()
     {
         startBtn.interactable = false;
@@ -51,7 +47,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " : 로비 참가 성공!");
         PhotonNetwork.LoadLevel("LobbyScene");
     }
 
@@ -71,11 +66,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             if (authRef.CurrentUser != null)
             {
                 string uid = authRef.CurrentUser.UserId;
-                await getNickname(uid);             //해당 비동기 작업 수행후 아래의 코드 실행
+                await getNickname(uid);             
                 Connect();
             }
-         }catch(Exception e){
-            Debug.Log("로그인 실패 : " + e.Message);
+        }catch(Exception e){
             connectMsg.SetActive(false);
         }
     }
@@ -93,7 +87,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
         }catch(Exception e)
         {
-            Debug.Log("닉네임 읽기 실패 : " + e.Message);
+
         }
 
     }

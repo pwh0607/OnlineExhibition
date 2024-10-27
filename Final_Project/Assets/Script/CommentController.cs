@@ -50,10 +50,10 @@ public class CommentController : MonoBehaviourPun
 
         DatabaseReference commentRef = databaseRef.Child(objName).Child("comments").Push();
 
-        StartCoroutine(AddCommentCoroutine(commentRef,username, comment));
+        StartCoroutine(AddCommentWithCoroutine(commentRef,username, comment));
         inputComment.text = "";
 
-        IEnumerator AddCommentCoroutine(DatabaseReference commentRef, string username, string comment)
+        IEnumerator AddCommentWithCoroutine(DatabaseReference commentRef, string username, string comment)
         {
             var setUsernameTask = commentRef.Child("username").SetValueAsync(username);
             yield return new WaitUntil(() => setUsernameTask.IsCompleted);
@@ -63,11 +63,9 @@ public class CommentController : MonoBehaviourPun
 
             if (setUsernameTask.IsFaulted || setCommentTask.IsFaulted)
             {
-                Debug.LogError("댓글 추가 실패...");
             }
             else
             {
-                Debug.Log("댓글 읽어 오는 중...");
                 LoadComments();
             }
             yield return null;
@@ -75,28 +73,23 @@ public class CommentController : MonoBehaviourPun
     }
 
     //댓글 버튼 클릭시...
-    void LoadComments()
+    public void LoadComments()
     {
-        Debug.Log("오브젝트 name : " + objName);
         comments.Clear();
 
-        //액자 클릭시... 해당 objName 받기.
         DatabaseReference commentRef = databaseRef.Child(objName).Child("comments");
-        commentRef.GetValueAsync().ContinueWith(task =>
+        commentRef.GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsFaulted || task.IsCanceled)
             {
-                Debug.LogError("댓글 읽어오기 실패.........");
                 return;
             }
 
             DataSnapshot snapshot = task.Result;
             if (!snapshot.Exists)
             {
-                Debug.Log("No comments found.");
                 return;
             }
-
             foreach (var commentSnapshot in snapshot.Children)
             {
                 IDictionary<string, object> commentData = (IDictionary<string, object>)commentSnapshot.Value;
@@ -107,46 +100,36 @@ public class CommentController : MonoBehaviourPun
                 Comment tmp = new Comment(commentUID, usernameTmp, commentTmp);
                 comments.Add(tmp);
             }
-            Debug.Log("댓글 추가 완료");
+            updateCommentList();
         });
     }
 
      private void setCommentViewer()
     {
         int i = 0;
-        Debug.Log("댓글 개수 : " + comments.Count);
         foreach (Comment comment in comments)
         {
-            try
-            {
-                Debug.Log("댓글 번호 " + (i+1));
-                Debug.Log(comment.username + " : " + comment.comment);
+            GameObject commentInstance = Instantiate(commentPrefab);
+            RectTransform commentPos = commentInstance.GetComponent<RectTransform>();
+            commentPos.SetParent(contentView.transform);
+            commentInstance.GetComponent<CommentContentController>().setParentObj(gameObject, comment.key, comment.comment);
+                
+            objList.Add(commentInstance);
 
-                GameObject commentInstance = Instantiate(commentPrefab);
-                RectTransform commentPos = commentInstance.GetComponent<RectTransform>();
-                commentPos.SetParent(contentView.transform);
-                objList.Add(commentInstance);
+            Vector2 dir = new Vector2(0.5f, 1f);
 
-                Vector2 dir = new Vector2(0.5f, 1f);
+            commentPos.anchorMin = dir;
+            commentPos.anchorMax = dir;
+            commentPos.pivot = dir;
 
-                //위치 및 스케일 조정
-                commentPos.anchorMin = dir;
-                commentPos.anchorMax = dir;
-                commentPos.pivot = dir;
+            commentPos.localPosition = new Vector3(0, 0, 0);
+            commentPos.anchoredPosition = new Vector2(0, -80f - (290 * i));
+            commentPos.localScale = new Vector3(4, 4, 1);
 
-                commentPos.localPosition = new Vector3(0, 0, 0);
-                commentPos.anchoredPosition = new Vector2(0, -80f - (290 * i));
-                commentPos.localScale = new Vector3(4, 4, 1);
+            commentInstance.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = comment.username;
+            commentInstance.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = comment.comment;
 
-                //댓글 내용 세팅
-                commentInstance.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = comment.username;
-                commentInstance.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = comment.comment;
-
-                i++;
-            }catch(Exception e)
-            {
-                Debug.LogError("Error :" + e);
-            }
+            i++;
         }
     }
     
@@ -158,7 +141,6 @@ public class CommentController : MonoBehaviourPun
     public void setActionCommentBtn(bool act)
     {
         commentBtn.gameObject.SetActive(act);
-        Debug.Log("액션실행!");
     }
 
     public void setCommentPart()
@@ -168,23 +150,26 @@ public class CommentController : MonoBehaviourPun
 
     public void updateCommentList()
     {
-        //기존의 댓글 오브젝트들 삭제;
-        Debug.Log("댓글수 : "+comments.Count);
         foreach(GameObject obj in objList){
             Destroy(obj);
         }
         setCommentViewer();
     }
+
+    public void removeComment(GameObject comment)
+    {
+        objList.Remove(comment);
+    }
 }
 struct Comment
 {
-    public string commentId;
+    public string key;
     public string username;
     public string comment;
 
-    public Comment(string commentId, string username, string comment)
+    public Comment(string key, string username, string comment)
     {
-        this.commentId = commentId;
+        this.key = key;
         this.username = username;
         this.comment = comment;
     }

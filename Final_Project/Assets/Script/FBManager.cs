@@ -30,26 +30,22 @@ public class FBManager : MonoBehaviourPun
             FirebaseApp.DefaultInstance.Options.DatabaseUrl = new System.Uri("https://onlineexhibitiontest-default-rtdb.firebaseio.com/");
             databaseRef = FirebaseDatabase.DefaultInstance.RootReference.Child("rooms").Child(currentRoomName);
 
-            //스토리지 참조
             storage = FirebaseStorage.DefaultInstance;
             storageRef = storage.GetReferenceFromUrl("gs://onlineexhibition-6cf84.appspot.com").Child(currentRoomName);
         }
         else
         {
-            // 인스턴스가 이미 존재하면 현재 객체 파괴
             Destroy(gameObject);
         }
     }
 
     public DatabaseReference GetDatabaseReference()
     {
-        Debug.Log("DB 참조 가져오기...");
         return databaseRef;
     }
 
     public StorageReference GetStorageReference()
     {
-        Debug.Log("Storage 참조 가져오기...");
         return storageRef;
     }
 }

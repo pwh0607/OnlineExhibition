@@ -10,7 +10,6 @@ public class ColorChanger : MonoBehaviourPunCallbacks
     private bool is_create;
     public GameObject framePrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
         GetComponent<MeshRenderer>().material = mat[0];

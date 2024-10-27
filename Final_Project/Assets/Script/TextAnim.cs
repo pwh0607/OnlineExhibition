@@ -24,7 +24,6 @@ public class TextAnim : MonoBehaviour
 
     public void OnEnable()
     {
-        Debug.Log("텍스트 활성화!!");
         GetComponent<TextMeshProUGUI>().color = new Color(0, 148, 255);
     }
     public void OnDisable()

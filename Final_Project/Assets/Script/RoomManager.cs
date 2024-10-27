@@ -7,30 +7,25 @@ using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public static RoomManager instance // 외부에서 싱글톤 오브젝트를 가져올때 사용할 프로퍼티
+    public static RoomManager instance 
     {
         get
         {
-            // 만약 싱글톤 변수에 아직 오브젝트가 할당되지 않았다면
             if (m_instance == null)
             {
-                // 씬에서 GameManager 오브젝트를 찾아 할당
                 m_instance = FindObjectOfType<RoomManager>();
             }
-
-            // 싱글톤 오브젝트를 반환
             return m_instance;
         }
     }
 
-    private static RoomManager m_instance; // 싱글톤이 할당될 static 변수
-    //public static RoomManager instance;
+    private static RoomManager m_instance;
+    static List<string> users;
 
     public GameObject playerPrefab;
     public GameObject playerPos;
 
     private int frame_cnt;
-    private int now_mode;
 
     private bool loadChecker;
     private void Awake()
@@ -39,28 +34,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
-        //instance = this;
-        //DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {   
         Vector3 SpawnPos = playerPos.transform.position;
         GameObject user =  PhotonNetwork.Instantiate(playerPrefab.name, SpawnPos, Quaternion.identity);
-        
-        now_mode = 0;
         frame_cnt = 0;
         loadChecker = false;
-    }
-
-    public void UpdateMode(int mode)
-    {
-        this.now_mode = mode;
-    }
-
-    public int GetMode()
-    {
-        return now_mode;
     }
 
     private void setProperties()
@@ -99,7 +80,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("LobbyScene");
     }
-
+    public void setUser(string userName)
+    {
+        users.Add(userName);
+    }
 
     public RoomManager getInstance()
     {

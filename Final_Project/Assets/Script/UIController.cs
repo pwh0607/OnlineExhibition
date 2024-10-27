@@ -11,7 +11,8 @@ public class UIController : MonoBehaviourPunCallbacks
 {
     private Camera cam;
 
-    //UI
+    private PlayerModeController PMC;
+
     public GameObject m_UI;
     public GameObject completeText;
     public GameObject openBtn_text;
@@ -22,8 +23,7 @@ public class UIController : MonoBehaviourPunCallbacks
     public GameObject ReviseMV;
     public GameObject DeleteMV;
 
-    //방 오브젝트 생성용
-    public GameObject cube;            //액자 생성용 큐브
+    public GameObject cube;           
 
     private bool menu_clicked = false;
 
@@ -37,7 +37,7 @@ public class UIController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        if (!PhotonNetwork.IsMasterClient)          //방 주인이 아닌 경우.
+        if (!PhotonNetwork.IsMasterClient)          
         {
             sidebar = customer_sidebar;
             customer_menu.SetActive(true);
@@ -50,8 +50,9 @@ public class UIController : MonoBehaviourPunCallbacks
             customer_menu.SetActive(false);
         }
         
-        //sidebar = master_sidebar;
         cam = GameObject.Find("mainCam").GetComponent<Camera>();
+        PMC = GetComponent<PlayerModeController>();
+
         cube.SetActive(false);
         sidebar.SetActive(false);
         revise_part.SetActive(false);
@@ -75,10 +76,9 @@ public class UIController : MonoBehaviourPunCallbacks
     public void OnClickOpen()
     {
         RoomManager.instance.setOpenOption();
-        //버튼 상태 변경
-        if (PhotonNetwork.CurrentRoom.IsOpen)           //공개 상태라면.
+
+        if (PhotonNetwork.CurrentRoom.IsOpen)           
         {
-            //문구 띄우기
             completeText.SetActive(true);
             openBtn_text.GetComponent<TextMeshProUGUI>().text = "OPEN";
         }
@@ -88,11 +88,8 @@ public class UIController : MonoBehaviourPunCallbacks
         }
     }
 
-    //버튼 컨트롤s
     public void LeaveRoom()
     {
-
-        Debug.Log("방 나가기");
         PhotonNetwork.LeaveRoom(); 
         if (photonView.IsMine)
         {
@@ -105,7 +102,6 @@ public class UIController : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsVisible = false;
         PhotonNetwork.CurrentRoom.IsOpen = false;
 
-        //방 삭제후 주인도 퇴장.
         PhotonNetwork.LeaveRoom();
     }
 
@@ -113,13 +109,11 @@ public class UIController : MonoBehaviourPunCallbacks
     {
         if (menu_clicked)
         {
-            //이미 메뉴 창이 열린상태라면 닫기
             menu_clicked = false;
             sidebar.SetActive(false);
         }
         else
         {
-            //메뉴창이 닫힌 상태라면 열기
             menu_clicked = true;
             sidebar.SetActive(true);
         }
@@ -127,40 +121,36 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void OnClickSetRevise()
     {
-        //방 수정 모드로 변경.
         revise_part.SetActive(true);
         normal_part.SetActive(false);
     }
 
     public void OnClickShowCube()
     {
-        //큐브 생성.
-        RoomManager.instance.UpdateMode(1);
+        PMC.setMpde(1);
         ReviseMV.SetActive(true);
     }
 
-    //완료 버튼을 눌렀을 때...
     public void OnClickSetNormal()
     {
-        //방 수정 모드로 변경.
         normal_part.SetActive(true);
         revise_part.SetActive(false);
 
-        //모드뷰어 비활성화.
         ReviseMV.SetActive(false);
         DeleteMV.SetActive(false);
-        RoomManager.instance.UpdateMode(0);
+        PMC.setMpde(0);
     }
 
     private void showCube()
     {
-        if (RoomManager.instance.GetMode() == 1)       //액자 생성 모드인 경우.
+        if (PMC.getMode() == 1)       
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.tag == "WALL")   //ray가 벽에 맞닿은 경우.
+                if (hit.collider.gameObject.tag == "WALL")   
                 {
                     cube.transform.position = hit.point;
                     cube.transform.rotation = hit.collider.gameObject.transform.rotation;
@@ -177,7 +167,6 @@ public class UIController : MonoBehaviourPunCallbacks
         }
     }
 
-    //Frame 버튼 관련
     public void OnPointerEnter()
     {
         this.cube.SetActive(false);
@@ -185,7 +174,7 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void OnPointerExit()
     {
-        if (RoomManager.instance.GetMode() == 1) 
+        if (PMC.getMode() == 1) 
         {
             this.cube.SetActive(true);
         }
@@ -197,23 +186,21 @@ public class UIController : MonoBehaviourPunCallbacks
 
     public void setDeleteMode()
     {
-        if(RoomManager.instance.GetMode() == 3)
+        if(PMC.getMode() == 3)
         {
-            RoomManager.instance.UpdateMode(0);
+            PMC.setMpde(0);
             DeleteMV.SetActive(false);
-            Debug.Log("일반 모드로 변경.");
         }
         else
         {
-            RoomManager.instance.UpdateMode(3);
+            PMC.setMpde(3);
             DeleteMV.SetActive(true);
-            Debug.Log("삭제 모드로 변경.");
         }
     }
     
     public void deleteFrame()
     {
-        if (RoomManager.instance.GetMode() == 3 && Input.GetMouseButtonDown(0))
+        if (PMC.getMode() == 3 && Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -223,10 +210,5 @@ public class UIController : MonoBehaviourPunCallbacks
                     Destroy(hit.collider.gameObject);
             }
         }
-    }
-
-    public void showCommentBtn()
-    {
-       
     }
 }

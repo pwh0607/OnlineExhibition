@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LobbyContoller : MonoBehaviour
 {
-    private GameObject lastView;         //이전 뷰 - Back 버튼용
+    private GameObject lastView;         
     private GameObject currentView;
 
     public GameObject visitView;

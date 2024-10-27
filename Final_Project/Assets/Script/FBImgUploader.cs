@@ -10,7 +10,6 @@ using Photon.Pun;
 
 public class FBImgUploader : MonoBehaviourPun
 {
-    //FB 참조
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private DatabaseReference databaseRef;
@@ -35,20 +34,14 @@ public class FBImgUploader : MonoBehaviourPun
     {
         fbManager = FBManager.instance;
 
-        //test
         if(fbManager != null)
         {
             databaseRef = fbManager.GetDatabaseReference();
             storageRef = fbManager.GetStorageReference();
         }
-        else
-        {
-            Debug.Log("FB manager null...'");
-        }
     }
 
-    //데이터 베이스 업로드
-    public void DBUpload(string imageFullName)
+    public void DBUpload()
     {
         string objName = this.gameObject.GetComponent<FrameController>().getObjName();
         string photoPath = imageFullName.Trim();
@@ -59,14 +52,12 @@ public class FBImgUploader : MonoBehaviourPun
         databaseRef.Child(objName).SetRawJsonValueAsync(json);
     }
 
-    //스토리지에 이미지 업로드
     public void OnClickImageLoad()
     {
-        NativeGallery.GetImageFromGallery((file) => {
+        NativeGallery.GetImageFromGallery(file => {
             FileInfo img = new FileInfo(file);
             if (!string.IsNullOrEmpty(file))
             {
-                //불러오기
                 StartCoroutine(UpLoadImage(file));
             }
         });
@@ -75,34 +66,29 @@ public class FBImgUploader : MonoBehaviourPun
         {
             byte[] imageData = File.ReadAllBytes(imagePath);
             string imageName = Path.GetFileName(imagePath).Split('.')[0];
+
             string saveImagePath = Application.persistentDataPath + "/Image";
             imageFullName = imageName + ".jpg";
 
             File.WriteAllBytes(saveImagePath + imageFullName, imageData);
-            DBUpload(imageFullName);
+            DBUpload();
 
             var metaData = new MetadataChange();
             metaData.ContentType = "image/jpg";
 
             StorageReference uploadRef = storageRef.Child(imageFullName);
-            uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread((task) =>
+            uploadRef.PutBytesAsync(imageData).ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted || task.IsCanceled)
                 {
-                    Debug.Log("업로드 실패...");
+                    return;
                 }
-                else
-                {
-                    Debug.Log("업로드 성공!!");
-                    //동기화 메서드 이므로 위의 행위가 끝난 후로 실행해야함.
-                    GetComponent<FBImgLoader>().ReadDB();
-                }
+                GetComponent<FBImgLoader>().ReadDB();
             });
             yield return null;
         }
     }
 
-    //DB에서 데이터 삭제.(액자 삭제시...)
     void DeleteDB()
     {
         string objName = GetComponent<FrameController>().getObjName();
@@ -112,11 +98,7 @@ public class FBImgUploader : MonoBehaviourPun
         {
             if (task.IsFaulted)
             {
-                Debug.Log("DB : DB data Delete Error");
-            }
-            else if (task.IsCompleted)
-            {
-                Debug.Log("DB : Object data Delete 완료...");
+                return;
             }
         });
     }
@@ -126,27 +108,8 @@ public class FBImgUploader : MonoBehaviourPun
         string objName = GetComponent<FrameController>().getObjName();
         StorageReference del_ref = storageRef.Child(imageFullName);
 
-        del_ref.DeleteAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompleted)
-            {
-                Debug.Log("STORAGE : image 삭제 완료");
-            }
-            else
-            {
-                Debug.Log("STORAGE : image 삭제 실패");
-            }
-        });
+        del_ref.DeleteAsync().ContinueWithOnMainThread(task => { });
     }
-
-    /*
-    private void OnDestroy()
-    {
-        //오브젝트 삭제 콜백.
-        DeleteDB();
-        DeleteStorage();
-    }
-    */
     
     void Start()
     {
